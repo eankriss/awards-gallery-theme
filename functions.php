@@ -7,6 +7,26 @@ if (!defined('ABSPATH')) {
 define('AWARDS_GALLERY_VERSION', '1.0.0');
 
 /* ============================================================
+   Advanced Custom Fields (bundled)
+   Loads ACF from /acf inside the theme unless the ACF plugin is
+   already active. Skipped until the /acf folder is added.
+   ============================================================ */
+add_action('after_setup_theme', function () {
+    $acf = get_stylesheet_directory() . '/acf/acf.php';
+    if (!class_exists('ACF') && file_exists($acf)) {
+        include_once $acf;
+    }
+});
+
+add_filter('acf/settings/path', function ($path) {
+    return get_stylesheet_directory() . '/acf/';
+});
+
+add_filter('acf/settings/dir', function ($dir) {
+    return get_stylesheet_directory_uri() . '/acf/';
+});
+
+/* ============================================================
    Theme support
    ============================================================ */
 function awards_gallery_setup()
@@ -154,6 +174,31 @@ function awards_gallery_disable_search($query)
 }
 add_action('parse_query', 'awards_gallery_disable_search');
 add_filter('get_search_form', '__return_empty_string');
+
+/* ============================================================
+   Allow SVG uploads (Media Library)
+   ============================================================ */
+function awards_gallery_mime_types($mimes)
+{
+    // SVGs can carry scripts, so only Administrators may upload them.
+    if (current_user_can('manage_options')) {
+        $mimes['svg'] = 'image/svg+xml';
+    }
+    return $mimes;
+}
+add_filter('upload_mimes', 'awards_gallery_mime_types');
+
+// SVGs have no intrinsic size, so give their Media Library thumbnails a width.
+function awards_gallery_fix_svg_admin()
+{
+    echo '<style>
+        .attachment-266x266, .thumbnail img {
+            width: 100% !important;
+            height: auto !important;
+        }
+    </style>';
+}
+add_action('admin_head', 'awards_gallery_fix_svg_admin');
 
 /* ============================================================
    Theme modules
