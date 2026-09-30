@@ -13,10 +13,6 @@
     "html": false
   },
   "attributes": {
-    "sectionId": {
-      "type": "string",
-      "default": "quote"
-    },
     "eyebrow": {
       "type": "string",
       "default": "Ready to Celebrate?"

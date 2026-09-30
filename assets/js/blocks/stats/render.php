@@ -20,7 +20,7 @@ $last  = count($items) - 1;
     ?>
       <div class="reveal flex flex-col items-center px-4 py-12 text-center lg:py-14<?php echo $i < $last ? ' lg:border-r lg:border-ink/15' : ''; ?><?php echo $i % 2 === 0 ? ' border-r border-ink/15' : ''; ?>" style="--d:<?php echo esc_attr(($i % 4) * 100); ?>ms">
         <dt class="order-2 mt-2 max-w-[14rem] text-[11px] uppercase tracking-[0.3em] text-ink/75 sm:text-[15px]"><?php echo esc_html($item['label'] ?? ''); ?></dt>
-        <dd class="order-1 text-5xl font-normal lg:text-[52px]" data-count="<?php echo esc_attr($number); ?>" data-suffix="<?php echo esc_attr($suffix); ?>"><?php echo esc_html(number_format_i18n($number) . $suffix); ?></dd>
+        <dd class="order-1 text-[clamp(2rem,1.25rem+2.5vw,3rem)] font-normal leading-tight" data-count="<?php echo esc_attr($number); ?>" data-suffix="<?php echo esc_attr($suffix); ?>"><?php echo esc_html(number_format_i18n($number) . $suffix); ?></dd>
       </div>
     <?php endforeach; ?>
   </dl>

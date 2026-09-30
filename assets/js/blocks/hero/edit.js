@@ -21,7 +21,12 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label={__('Primary text', 'awards-gallery-theme')} value={attributes.primaryText} onChange={set('primaryText')} />
           <TextControl label={__('Primary URL', 'awards-gallery-theme')} value={attributes.primaryUrl} onChange={set('primaryUrl')} />
           <TextControl label={__('Secondary text', 'awards-gallery-theme')} value={attributes.secondaryText} onChange={set('secondaryText')} />
-          <TextControl label={__('Secondary URL', 'awards-gallery-theme')} value={attributes.secondaryUrl} onChange={set('secondaryUrl')} />
+          <TextControl
+            label={__('Secondary URL', 'awards-gallery-theme')}
+            help={__('Leave empty to email the address set in Customizer → Contact & Footer.', 'awards-gallery-theme')}
+            value={attributes.secondaryUrl}
+            onChange={set('secondaryUrl')}
+          />
         </PanelBody>
         <PanelBody title={__('Background', 'awards-gallery-theme')} initialOpen={false}>
           <MediaField label={__('Background image', 'awards-gallery-theme')} value={attributes.image} onChange={set('image')} />

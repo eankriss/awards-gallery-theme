@@ -9,14 +9,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$bg      = awards_gallery_media_url($attributes, 'background', 'backgroundUrl');
-$wrapper = ['class' => 'bg-ink-800 bg-cover bg-center py-20 lg:py-24'];
-if (!empty($attributes['sectionId'])) {
-    $wrapper['id'] = sanitize_title($attributes['sectionId']);
-}
-if ($bg) {
-    $wrapper['style'] = 'background-image:url(' . esc_url($bg) . ')';
-}
+// Background matches the Figma frame: vertical ink gradient + fine grain.
+$wrapper = ['class' => 'bg-noise bg-ink bg-ink-sheen py-20 lg:py-24'];
 ?>
 <section <?php echo get_block_wrapper_attributes($wrapper); ?>>
   <div class="mx-auto max-w-shell px-5 sm:px-8 lg:px-20">
@@ -28,11 +22,10 @@ if ($bg) {
           $img   = awards_gallery_media_url($item);
           $title = $item['title'] ?? '';
           $url   = trim($item['url'] ?? '');
-          // No link → a plain, non-clickable card. Without the `group` class the
-          // hover zoom/lift stays off too, so it doesn't look clickable.
+          // No link → a non-clickable card (a <div>); the hover zoom/lift still plays.
           $tag   = $url ? 'a' : 'div';
       ?>
-        <<?php echo $tag; ?><?php echo $url ? ' href="' . esc_url($url) . '"' : ''; ?> class="reveal relative block overflow-hidden bg-ink<?php echo $url ? ' group' : ''; ?>" style="--d:<?php echo esc_attr(($i % 3) * 100); ?>ms">
+        <<?php echo $tag; ?><?php echo $url ? ' href="' . esc_url($url) . '"' : ''; ?> class="reveal group relative block overflow-hidden bg-ink" style="--d:<?php echo esc_attr(($i % 3) * 100); ?>ms">
           <?php if ($img) : ?>
             <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" class="aspect-[418/540] w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy">
           <?php else : ?>

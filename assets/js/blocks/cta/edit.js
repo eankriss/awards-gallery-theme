@@ -23,7 +23,6 @@ export default function Edit({ attributes, setAttributes }) {
             value={attributes.buttonUrl}
             onChange={set('buttonUrl')}
           />
-          <TextControl label={__('Section ID (anchor)', 'awards-gallery-theme')} value={attributes.sectionId} onChange={set('sectionId')} />
         </PanelBody>
       </InspectorControls>
 

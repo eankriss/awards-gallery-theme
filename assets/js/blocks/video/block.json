@@ -13,10 +13,6 @@
     "html": false
   },
   "attributes": {
-    "sectionId": {
-      "type": "string",
-      "default": "video"
-    },
     "video": {
       "type": "object",
       "default": {
