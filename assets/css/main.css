@@ -2,8 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  a:hover {
+    color: theme("colors.gold.DEFAULT");
+  }
+}
+
 @layer components {
   .container-shell {
-    @apply mx-auto w-full max-w-shell px-4;
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-14;
+  }
+
+  .btn-gold {
+    @apply inline-flex h-14 items-center justify-center bg-gold-gradient px-12 text-xs uppercase tracking-[0.3em] text-ink transition duration-300 hover:-translate-y-0.5 hover:text-ink hover:shadow-[0_12px_30px_-10px_rgba(218,147,40,0.6)] hover:brightness-110 sm:text-[15px];
+  }
+
+  .btn-outline {
+    @apply inline-flex h-14 items-center justify-center border border-gold/70 px-12 text-xs uppercase tracking-[0.3em] text-gold transition duration-300 hover:-translate-y-0.5 hover:border-gold hover:bg-gold/10 hover:text-gold sm:text-[15px];
+  }
+
+  .btn-dark {
+    @apply inline-flex h-14 items-center justify-center bg-gold-dark px-12 text-xs uppercase tracking-[0.3em] text-cream transition duration-300 hover:-translate-y-0.5 hover:bg-[#86592a] hover:text-cream sm:text-[15px];
+  }
+
+  /* Plain content (paragraphs, images…) on pages built with core blocks. */
+  .entry-content > :not([class*="wp-block-awards-gallery-"]):not(.alignfull) {
+    @apply mx-auto max-w-[840px] px-5;
+  }
+}
+
+/*
+ * Typography for core blocks. Tailwind's Preflight resets headings and lists
+ * to plain text, so core Heading / List / Paragraph blocks need sizes back.
+ * Kept outside @layer so Tailwind never purges them (these classes only
+ * exist in WordPress output, not in theme files). Scoped to core block
+ * classes so the custom Awards Gallery blocks keep their own utility-driven
+ * styles. Also loaded in the editor (main.min.css).
+ */
+h1.wp-block-heading { @apply mb-4 mt-10 text-4xl font-medium leading-tight sm:text-5xl; }
+h2.wp-block-heading { @apply mb-4 mt-10 text-3xl font-medium leading-tight sm:text-4xl; }
+h3.wp-block-heading { @apply mb-3 mt-8 text-2xl font-medium leading-snug; }
+h4.wp-block-heading { @apply mb-3 mt-6 text-xl font-medium leading-snug; }
+h5.wp-block-heading,
+h6.wp-block-heading { @apply mb-2 mt-6 text-lg font-medium; }
+
+.wp-block-list { @apply my-5 pl-6 leading-relaxed; }
+ul.wp-block-list { @apply list-disc; }
+ol.wp-block-list { @apply list-decimal; }
+
+.entry-content > p,
+p.wp-block-paragraph { @apply mb-5 leading-relaxed; }
+
+.wp-block-quote { @apply my-8 border-l-2 border-gold pl-6 text-lg italic; }
+
+.entry-content a:not([class]),
+p.wp-block-paragraph a { @apply text-gold underline underline-offset-4; }
+
+/* Scroll-reveal — JS adds .is-in; without JS everything stays visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+.reveal.is-in,
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .animate-rise {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .animate-marquee,
+  .animate-glow {
+    animation: none !important;
   }
 }

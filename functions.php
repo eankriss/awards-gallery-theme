@@ -20,7 +20,7 @@ function awards_gallery_setup()
     add_theme_support('align-wide');
     add_theme_support('custom-logo');
     add_theme_support('responsive-embeds');
-    add_theme_support('html5', ['search-form', 'gallery', 'caption', 'style', 'script']);
+    add_theme_support('html5', ['gallery', 'caption', 'style', 'script']);
 
     register_nav_menus([
         'primary' => __('Primary Menu', 'awards-gallery-theme'),
@@ -34,7 +34,7 @@ add_action('after_setup_theme', 'awards_gallery_setup');
    ============================================================ */
 function awards_gallery_fonts_url()
 {
-    return 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap';
+    return 'https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@400&family=Pinyon+Script&family=Rubik:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap';
 }
 
 function awards_gallery_enqueue_assets()
@@ -81,6 +81,13 @@ function awards_gallery_enqueue_assets()
     }
 }
 add_action('wp_enqueue_scripts', 'awards_gallery_enqueue_assets');
+
+function awards_gallery_preconnect_fonts()
+{
+    echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+    echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+}
+add_action('wp_head', 'awards_gallery_preconnect_fonts', 1);
 
 /* ============================================================
    Editor assets — preview blocks with real fonts + utilities
@@ -131,6 +138,27 @@ function awards_gallery_register_blocks()
 add_action('init', 'awards_gallery_register_blocks');
 
 /* ============================================================
+   Site search is not used — front-end ?s= requests get the 404 page.
+   (WP Admin search is unaffected.)
+   ============================================================ */
+function awards_gallery_disable_search($query)
+{
+    if (!is_admin() && $query->is_main_query() && $query->is_search()) {
+        $query->is_search = false;
+        $query->query_vars['s'] = false;
+        $query->query['s'] = false;
+        $query->set_404();
+        status_header(404);
+        nocache_headers();
+    }
+}
+add_action('parse_query', 'awards_gallery_disable_search');
+add_filter('get_search_form', '__return_empty_string');
+
+/* ============================================================
    Theme modules
    ============================================================ */
 require_once get_theme_file_path('/inc/template-helpers.php');
+require_once get_theme_file_path('/inc/navigation.php');
+require_once get_theme_file_path('/inc/customizer.php');
+require_once get_theme_file_path('/inc/homepage.php');

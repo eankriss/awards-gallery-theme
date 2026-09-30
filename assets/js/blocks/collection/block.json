@@ -1,0 +1,125 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/collection",
+  "title": "Awards Gallery Collection",
+  "category": "design",
+  "icon": "grid-view",
+  "description": "\"Our Collection\" intro + image cards with overlaid captions and a button.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "sectionId": {
+      "type": "string",
+      "default": "collection"
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "Our Collection"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Brilliance in Its"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "Distinguished Form"
+    },
+    "text": {
+      "type": "string",
+      "default": "Six premium award materials, all fully custom-made for every occasion."
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "See Full Collection"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "linkText": {
+      "type": "string",
+      "default": ""
+    },
+    "background": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "backgroundUrl": {
+      "type": "string",
+      "default": "collection-bg.jpg"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "kicker": "Lightweight Brilliance",
+          "title": "Acrylic Award",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-acrylic.jpg"
+        },
+        {
+          "kicker": "Enduring Clarity",
+          "title": "Crystal Award",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-crystal.jpg"
+        },
+        {
+          "kicker": "Timeless Elegance",
+          "title": "Glass Award",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-glass.jpg"
+        },
+        {
+          "kicker": "Infinite Imagination",
+          "title": "Resin Award",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-resin.jpg"
+        },
+        {
+          "kicker": "Premium Composite",
+          "title": "Synthetic Award",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-synthetic.jpg"
+        },
+        {
+          "kicker": "Natural Authority",
+          "title": "Wood Award",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-wood.jpg"
+        }
+      ]
+    }
+  }
+}

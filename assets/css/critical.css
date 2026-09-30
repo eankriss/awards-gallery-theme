@@ -2,9 +2,16 @@
 @tailwind base;
 
 html {
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  @apply bg-paper font-sans text-ink antialiased;
+  @apply bg-ink font-sans text-cream antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

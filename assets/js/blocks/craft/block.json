@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/craft",
+  "title": "Awards Gallery Behind the Craft",
+  "category": "design",
+  "icon": "format-gallery",
+  "description": "Three tall image cards with caption overlays.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "sectionId": {
+      "type": "string",
+      "default": "craft"
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "Behind the craft"
+    },
+    "background": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "backgroundUrl": {
+      "type": "string",
+      "default": "collection-bg.jpg"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "kicker": "Handcrafted",
+          "title": "Filipino Artisanship",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "craft-artisan.jpg"
+        },
+        {
+          "kicker": "Premium quality",
+          "title": "Gold and Bronze Medals",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "craft-medals.jpg"
+        },
+        {
+          "kicker": "Precision work",
+          "title": "Custom Engraving",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "craft-engraving.jpg"
+        }
+      ]
+    }
+  }
+}
