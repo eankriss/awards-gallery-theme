@@ -1,1 +1,24 @@
 /* Block editor-only styles. */
+
+/* No scroll observer in the editor — show reveal content immediately. */
+.reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Blocks are previewed via ServerSideRender; stop clicks navigating away. */
+[class*="wp-block-awards-gallery-"] a {
+  pointer-events: none;
+}
+
+/* Post / page title — Tailwind's reset shrinks it to body text otherwise. */
+.editor-post-title,
+.editor-post-title__input {
+  margin-top: 2.5rem !important;
+  margin-bottom: 1.5rem !important;
+  font-family: Rubik, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.25rem, 4vw, 3.5rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.15 !important;
+  color: #F5F0E8;
+}

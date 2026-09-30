@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/process",
+  "title": "Awards Gallery Process",
+  "category": "design",
+  "icon": "editor-ol",
+  "description": "\"Simple Process\" numbered steps grid.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Simple Process"
+    },
+    "heading": {
+      "type": "string",
+      "default": "From Vision"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "To Trophy"
+    },
+    "image": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": "process-mark.png"
+    },
+    "steps": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Submit Inquiry",
+          "text": "Share your item type, quantity, size, material, event date, and design concept via form or email."
+        },
+        {
+          "title": "Receive Quotation",
+          "text": "Your detailed quote arrives within 24–48 hours. Bulk orders qualify for exclusive pricing."
+        },
+        {
+          "title": "Design Approval",
+          "text": "We send a digital mockup. Revisions continue until every detail is exactly right."
+        },
+        {
+          "title": "Confirm & Pay",
+          "text": "Once the layout is approved, we’ll require a down payment to start production."
+        },
+        {
+          "title": "Production",
+          "text": "Standard production time: 5-10 working days (may vary depending on quantity and complexity)."
+        },
+        {
+          "title": "Pick-up or Delivery",
+          "text": "You may pick up your order from our location. Or, we can arrange shipping via courier or delivery service (fees apply)."
+        }
+      ]
+    }
+  }
+}

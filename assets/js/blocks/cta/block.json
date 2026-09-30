@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/cta",
+  "title": "Awards Gallery Call to Action",
+  "category": "design",
+  "icon": "megaphone",
+  "description": "\"Ready to Celebrate?\" call to action on a gold background.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "sectionId": {
+      "type": "string",
+      "default": "quote"
+    },
+    "eyebrow": {
+      "type": "string",
+      "default": "Ready to Celebrate?"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Create Something"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "Lasting"
+    },
+    "text": {
+      "type": "string",
+      "default": "Custom quote delivered within 24–48 hours. Bulk orders welcome."
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Get a Free Quote"
+    },
+    "buttonUrl": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}

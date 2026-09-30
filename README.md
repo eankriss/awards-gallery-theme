@@ -8,7 +8,8 @@ Gutenberg blocks, styled with Tailwind CSS v3.
 ## Stack
 
 - Classic PHP templates (`header.php`, `footer.php`, `index.php`, `page.php`,
-  `single.php`, `search.php`, `404.php`)
+  `single.php`, `404.php`)
+- No site search: front-end `?s=` requests return the 404 page
 - Dynamic, server-rendered Gutenberg blocks (React `edit` + PHP `render.php`),
   auto-registered from `assets/js/blocks/*`
 - Tailwind CSS v3

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/testimonials",
+  "title": "Awards Gallery Testimonials",
+  "category": "design",
+  "icon": "format-quote",
+  "description": "Client quote cards on a dark background.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Testimonials"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Words From"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "Our Clients"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "quote": "Really excellent workmanship — the best business practice compared to the rest. Highly recommended.",
+          "name": "Eloisa Clarisse Eusuya",
+          "role": "Event Organizer"
+        },
+        {
+          "quote": "Quality of the item was great. First-rate service from start to finish. Will definitely order again.",
+          "name": "Ernesto Sacro Jr.",
+          "role": "Corporate Client"
+        },
+        {
+          "quote": "Received 5,000 medals in perfect quality. Delivered on time without any compromise.",
+          "name": "Cristobal Tanigue",
+          "role": "School Administrator"
+        }
+      ]
+    }
+  }
+}

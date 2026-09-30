@@ -5,7 +5,7 @@
     "appearanceTools": true,
     "layout": {
       "contentSize": "840px",
-      "wideSize": "1280px"
+      "wideSize": "1440px"
     },
     "spacing": {
       "units": ["px", "rem", "em", "%", "vw", "vh"]
@@ -15,25 +15,25 @@
     },
     "color": {
       "palette": [
-        { "slug": "ink", "name": "Ink", "color": "#111111" },
-        { "slug": "paper", "name": "Paper", "color": "#FFFFFF" },
-        { "slug": "muted", "name": "Muted", "color": "#6B7280" },
-        { "slug": "gold", "name": "Gold", "color": "#C9A227" },
-        { "slug": "gold-soft", "name": "Gold Soft", "color": "#E6C65C" }
+        { "slug": "ink", "name": "Ink", "color": "#0A0908" },
+        { "slug": "ink-800", "name": "Ink 800", "color": "#141210" },
+        { "slug": "gold", "name": "Gold", "color": "#DA9328" },
+        { "slug": "gold-dark", "name": "Gold Dark", "color": "#9A6B2F" },
+        { "slug": "cream", "name": "Cream", "color": "#F5F0E8" }
       ]
     }
   },
   "styles": {
     "color": {
-      "background": "#FFFFFF",
-      "text": "#111111"
+      "background": "#0A0908",
+      "text": "#F5F0E8"
     },
     "typography": {
-      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontFamily": "Rubik, ui-sans-serif, system-ui, sans-serif",
       "lineHeight": "1.6"
     },
     "spacing": {
-      "blockGap": "1.5rem"
+      "blockGap": "0"
     }
   }
 }

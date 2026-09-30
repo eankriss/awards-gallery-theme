@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/marquee",
+  "title": "Awards Gallery Marquee",
+  "category": "design",
+  "icon": "leftright",
+  "description": "Scrolling strip of highlights separated by gold diamonds.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": { "html": false },
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        { "text": "Fully Custom-Made Designs" },
+        { "text": "Premium Materials & Craftsmanship" },
+        { "text": "Corporate-Focused Solutions" },
+        { "text": "Fast Turnaround" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/stats",
+  "title": "Awards Gallery Stats",
+  "category": "design",
+  "icon": "chart-bar",
+  "description": "Row of animated count-up numbers with labels.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": { "html": false },
+  "attributes": {
+    "items": {
+      "type": "array",
+      "default": [
+        { "value": "70", "suffix": "+", "label": "Years of Mastery" },
+        { "value": "5000", "suffix": "+", "label": "Awards Crafted Annually" },
+        { "value": "500", "suffix": "+", "label": "Corporate Clients" },
+        { "value": "100", "suffix": "%", "label": "Custom Designs" }
+      ]
+    }
+  }
+}

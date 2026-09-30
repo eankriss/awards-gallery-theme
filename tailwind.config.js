@@ -10,16 +10,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        ink: "#111111",
-        paper: "#ffffff",
-        muted: "#6b7280",
-        gold: { DEFAULT: "#c9a227", soft: "#e6c65c" }
+        ink: { DEFAULT: "#0A0908", 900: "#060504", 800: "#141210", 700: "#1C1A17" },
+        gold: { DEFAULT: "#DA9328", dark: "#9A6B2F", light: "#E6A43F" },
+        cream: { DEFAULT: "#F5F0E8", 200: "#F4F1E9", 300: "#E7E3DA" }
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Inter", "sans-serif"]
+        sans: ["Rubik", "ui-sans-serif", "system-ui", "sans-serif"],
+        script: ['"Great Vibes"', "cursive"],
+        display: ['"Pinyon Script"', "cursive"],
+        outfit: ["Outfit", "ui-sans-serif", "system-ui", "sans-serif"]
       },
-      maxWidth: { shell: "1280px" }
+      letterSpacing: { eyebrow: "0.35em" },
+      backgroundImage: {
+        "gold-gradient": "linear-gradient(90deg, #D4922A 0%, #FAC73F 100%)",
+        "gold-sheen": "linear-gradient(115deg, #DC952A 0%, #F0B833 45%, #DC952A 100%)"
+      },
+      maxWidth: { shell: "1440px" },
+      keyframes: {
+        rise: { "0%": { opacity: 0, transform: "translateY(24px)" }, "100%": { opacity: 1, transform: "none" } },
+        marquee: { "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-50%)" } },
+        glow: { "0%,100%": { opacity: 0.55 }, "50%": { opacity: 0.8 } }
+      },
+      animation: {
+        rise: "rise .9s cubic-bezier(.2,.7,.2,1) both",
+        marquee: "marquee 40s linear infinite",
+        glow: "glow 6s ease-in-out infinite"
+      }
     }
   },
   plugins: []

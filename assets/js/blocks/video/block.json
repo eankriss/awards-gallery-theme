@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/video",
+  "title": "Awards Gallery Video",
+  "category": "design",
+  "icon": "video-alt3",
+  "description": "Full-width video introduction — uploaded MP4 or a YouTube / Vimeo link — with an optional logo overlay.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "sectionId": {
+      "type": "string",
+      "default": "video"
+    },
+    "video": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "poster": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": true
+    },
+    "controls": {
+      "type": "boolean",
+      "default": false
+    },
+    "showMark": {
+      "type": "boolean",
+      "default": false
+    },
+    "mark": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    }
+  }
+}
