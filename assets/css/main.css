@@ -18,7 +18,7 @@
   }
 
   .btn-gold {
-    @apply inline-flex h-14 items-center justify-center bg-gold-gradient px-12 text-xs uppercase tracking-[0.3em] text-ink transition duration-300 hover:-translate-y-0.5 hover:text-ink hover:shadow-[0_12px_30px_-10px_rgba(218,147,40,0.6)] hover:brightness-110 sm:text-[15px];
+    @apply inline-flex h-14 items-center justify-center bg-gold-gradient px-12 text-xs uppercase tracking-[0.3em] text-black transition duration-300 hover:-translate-y-0.5 hover:text-black hover:shadow-[0_12px_30px_-10px_rgba(218,147,40,0.6)] hover:brightness-110 sm:text-[15px];
   }
 
   .btn-outline {
@@ -27,6 +27,26 @@
 
   .btn-dark {
     @apply inline-flex h-14 items-center justify-center bg-gold-dark px-12 text-xs uppercase tracking-[0.3em] text-cream transition duration-300 hover:-translate-y-0.5 hover:bg-[#86592a] hover:text-cream sm:text-[15px];
+  }
+
+  /*
+   * Film-grain overlay matching the Figma "Noise" effect (mono, size 0.5,
+   * density 95%, #B0B0B0 at 15%). Sits between the section background and
+   * its content; add to any section that needs the grain.
+   */
+  .bg-noise {
+    position: relative;
+    isolation: isolate;
+  }
+  .bg-noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.15;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.69 0 0 0 0 0.69 0 0 0 0 0.69 0 0 0 1.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
   }
 
   /* Plain content (paragraphs, images…) on pages built with core blocks. */

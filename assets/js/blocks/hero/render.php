@@ -10,6 +10,12 @@ if (!defined('ABSPATH')) {
 }
 
 $bg = awards_gallery_media_url($attributes);
+
+// "Get a Quote" emails the address from Customizer → Contact & Footer unless a URL is set.
+$secondary_url = $attributes['secondaryUrl'] ?? '';
+if (!$secondary_url && awards_gallery_contact('ag_email')) {
+    $secondary_url = 'mailto:' . awards_gallery_contact('ag_email');
+}
 ?>
 <section <?php echo get_block_wrapper_attributes(['class' => 'relative isolate flex min-h-[640px] items-center overflow-hidden pb-16 pt-32 lg:min-h-[900px]']); ?>>
   <?php if ($bg) : ?>
@@ -41,12 +47,13 @@ $bg = awards_gallery_media_url($attributes);
     <?php endif; ?>
 
     <?php if (!empty($attributes['primaryText']) || !empty($attributes['secondaryText'])) : ?>
-      <div class="animate-rise mt-12 flex w-full flex-col gap-4 sm:w-auto sm:flex-row" style="animation-delay:.8s">
+      <?php // Phones: both buttons share one row at a smaller size; from sm up they use the full button size. ?>
+      <div class="animate-rise mt-10 flex w-full gap-3 sm:mt-12 sm:w-auto sm:gap-4" style="animation-delay:.8s">
         <?php if (!empty($attributes['primaryText'])) : ?>
-          <a href="<?php echo esc_url($attributes['primaryUrl'] ?: '#'); ?>" class="btn-gold"><?php echo esc_html($attributes['primaryText']); ?></a>
+          <a href="<?php echo esc_url($attributes['primaryUrl'] ?: '#'); ?>" class="btn-gold whitespace-nowrap max-sm:h-12 max-sm:min-w-0 max-sm:flex-1 max-sm:px-2 max-sm:text-[11px] max-sm:tracking-[0.15em] max-[359px]:text-[10px] max-[359px]:tracking-[0.1em]"><?php echo esc_html($attributes['primaryText']); ?></a>
         <?php endif; ?>
         <?php if (!empty($attributes['secondaryText'])) : ?>
-          <a href="<?php echo esc_url($attributes['secondaryUrl'] ?: '#'); ?>" class="btn-outline"><?php echo esc_html($attributes['secondaryText']); ?></a>
+          <a href="<?php echo esc_url($secondary_url ?: '#'); ?>" class="btn-outline whitespace-nowrap max-sm:h-12 max-sm:min-w-0 max-sm:flex-1 max-sm:px-2 max-sm:text-[11px] max-sm:tracking-[0.15em] max-[359px]:text-[10px] max-[359px]:tracking-[0.1em]"><?php echo esc_html($attributes['secondaryText']); ?></a>
         <?php endif; ?>
       </div>
     <?php endif; ?>

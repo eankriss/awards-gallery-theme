@@ -13,24 +13,9 @@
     "html": false
   },
   "attributes": {
-    "sectionId": {
-      "type": "string",
-      "default": "craft"
-    },
     "eyebrow": {
       "type": "string",
       "default": "Behind the craft"
-    },
-    "background": {
-      "type": "object",
-      "default": {
-        "id": 0,
-        "url": ""
-      }
-    },
-    "backgroundUrl": {
-      "type": "string",
-      "default": "collection-bg.jpg"
     },
     "items": {
       "type": "array",

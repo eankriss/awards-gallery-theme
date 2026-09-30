@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, TextControl, TextareaControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
-import { MediaField, Repeater } from '../_shared/controls';
+import { Repeater } from '../_shared/controls';
 
 export default function Edit({ attributes, setAttributes }) {
   const set = (key) => (value) => setAttributes({ [key]: value });
@@ -36,11 +36,9 @@ export default function Edit({ attributes, setAttributes }) {
             ]}
           />
         </PanelBody>
-        <PanelBody title={__('Button & background', 'awards-gallery-theme')} initialOpen={false}>
+        <PanelBody title={__('Button', 'awards-gallery-theme')} initialOpen={false}>
           <TextControl label={__('Button text', 'awards-gallery-theme')} value={attributes.buttonText} onChange={set('buttonText')} />
           <TextControl label={__('Button URL', 'awards-gallery-theme')} value={attributes.buttonUrl} onChange={set('buttonUrl')} />
-          <MediaField label={__('Background image', 'awards-gallery-theme')} value={attributes.background} onChange={set('background')} />
-          <TextControl label={__('Section ID (anchor)', 'awards-gallery-theme')} value={attributes.sectionId} onChange={set('sectionId')} />
         </PanelBody>
       </InspectorControls>
 

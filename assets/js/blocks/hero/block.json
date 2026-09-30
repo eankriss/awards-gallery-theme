@@ -9,18 +9,56 @@
   "editorScript": "file:./build/index.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
-  "supports": { "html": false },
+  "supports": {
+    "html": false
+  },
   "attributes": {
-    "eyebrow": { "type": "string", "default": "Est. 1950s · Over 70 Years of Excellence" },
-    "heading": { "type": "string", "default": "For Our" },
-    "headingScript": { "type": "string", "default": "Winners" },
-    "text": { "type": "string", "default": "A lasting symbol of honor, excellence, and achievement — crafted by three generations of Filipino artisans." },
-    "tagline": { "type": "string", "default": "Celebrate Happiness · Premium Awards for Every Milestone" },
-    "primaryText": { "type": "string", "default": "View Collection" },
-    "primaryUrl": { "type": "string", "default": "#collection" },
-    "secondaryText": { "type": "string", "default": "Get a Quote" },
-    "secondaryUrl": { "type": "string", "default": "#quote" },
-    "image": { "type": "object", "default": { "id": 0, "url": "" } },
-    "imageUrl": { "type": "string", "default": "hero-bg.jpg" }
+    "eyebrow": {
+      "type": "string",
+      "default": "Est. 1950s · Over 70 Years of Excellence"
+    },
+    "heading": {
+      "type": "string",
+      "default": "For Our"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "Winners"
+    },
+    "text": {
+      "type": "string",
+      "default": "A lasting symbol of honor, excellence, and achievement — crafted by three generations of Filipino artisans."
+    },
+    "tagline": {
+      "type": "string",
+      "default": "Celebrate Happiness · Premium Awards for Every Milestone"
+    },
+    "primaryText": {
+      "type": "string",
+      "default": "View Collection"
+    },
+    "primaryUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryText": {
+      "type": "string",
+      "default": "Get a Quote"
+    },
+    "secondaryUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "image": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": "hero-bg.jpg"
+    }
   }
 }

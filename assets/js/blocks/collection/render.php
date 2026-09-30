@@ -9,14 +9,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$bg      = awards_gallery_media_url($attributes, 'background', 'backgroundUrl');
-$wrapper = ['class' => 'relative bg-ink-700 bg-cover bg-top py-20 lg:py-28'];
-if (!empty($attributes['sectionId'])) {
-    $wrapper['id'] = sanitize_title($attributes['sectionId']);
-}
-if ($bg) {
-    $wrapper['style'] = 'background-image:url(' . esc_url($bg) . ')';
-}
+// Same background as Behind the Craft: vertical ink gradient + fine grain.
+$wrapper = ['class' => 'bg-noise bg-ink bg-ink-sheen py-20 lg:py-28'];
 ?>
 <section <?php echo get_block_wrapper_attributes($wrapper); ?>>
   <div class="mx-auto max-w-shell px-5 sm:px-8 lg:px-20">
@@ -37,8 +31,11 @@ if ($bg) {
       <?php foreach (($attributes['items'] ?? []) as $i => $item) :
           $img   = awards_gallery_media_url($item);
           $title = $item['title'] ?? '';
+          $url   = trim($item['url'] ?? '');
+          // No link → a non-clickable card (a <div>); the hover zoom/lift still plays.
+          $tag   = $url ? 'a' : 'div';
       ?>
-        <a href="<?php echo esc_url(($item['url'] ?? '') ?: '#'); ?>" class="reveal group relative block overflow-hidden bg-ink" style="--d:<?php echo esc_attr(($i % 3) * 100); ?>ms">
+        <<?php echo $tag; ?><?php echo $url ? ' href="' . esc_url($url) . '"' : ''; ?> class="reveal group relative block overflow-hidden bg-ink" style="--d:<?php echo esc_attr(($i % 3) * 100); ?>ms">
           <?php if ($img) : ?>
             <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" class="aspect-[418/540] w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy">
           <?php else : ?>
@@ -50,11 +47,11 @@ if ($bg) {
               <p class="text-xs uppercase tracking-[0.3em] text-gold sm:text-base"><?php echo esc_html($item['kicker']); ?></p>
             <?php endif; ?>
             <h3 class="mt-1 text-2xl font-bold text-cream lg:text-[28px]"><?php echo esc_html($title); ?></h3>
-            <?php if (!empty($attributes['linkText'])) : ?>
+            <?php if ($url && !empty($attributes['linkText'])) : ?>
               <span class="mt-3 inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-cream/80 transition-colors group-hover:text-gold"><?php echo esc_html($attributes['linkText']); ?> <span class="transition-transform duration-300 group-hover:translate-x-1">→</span></span>
             <?php endif; ?>
           </div>
-        </a>
+        </<?php echo $tag; ?>>
       <?php endforeach; ?>
     </div>
 

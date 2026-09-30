@@ -75,9 +75,9 @@ function awards_gallery_default_links()
 
     return [
         $link(__('Home', 'awards-gallery-theme'), home_url('/'), is_front_page()),
-        $link(__('Products', 'awards-gallery-theme'), home_url('/#collection')),
-        $link(__('Contact us', 'awards-gallery-theme'), home_url('/#contact')),
-        $link(__('About us', 'awards-gallery-theme'), home_url('/#craft')),
+        $link(__('Products', 'awards-gallery-theme'), '#'),
+        $link(__('Contact us', 'awards-gallery-theme'), '#'),
+        $link(__('About us', 'awards-gallery-theme'), '#'),
         $link(__('Blog', 'awards-gallery-theme'), '#'),
     ];
 }
@@ -113,7 +113,7 @@ function awards_gallery_desktop_nav($links)
 {
     foreach ($links as $link) {
         $current = $link['active'] || $link['ancestor'];
-        $classes = 'text-[15px] uppercase tracking-[0.15em] transition-colors hover:text-gold '
+        $classes = 'text-[13px] uppercase tracking-[0.1em] transition-colors hover:text-gold xl:text-[15px] xl:tracking-[0.15em] '
             . ($current ? 'text-gold underline decoration-1 underline-offset-[10px]' : 'text-cream');
 
         if (!$link['children']) {

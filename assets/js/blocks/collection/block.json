@@ -13,10 +13,6 @@
     "html": false
   },
   "attributes": {
-    "sectionId": {
-      "type": "string",
-      "default": "collection"
-    },
     "eyebrow": {
       "type": "string",
       "default": "Our Collection"
@@ -44,17 +40,6 @@
     "linkText": {
       "type": "string",
       "default": ""
-    },
-    "background": {
-      "type": "object",
-      "default": {
-        "id": 0,
-        "url": ""
-      }
-    },
-    "backgroundUrl": {
-      "type": "string",
-      "default": "collection-bg.jpg"
     },
     "items": {
       "type": "array",

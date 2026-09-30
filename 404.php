@@ -19,7 +19,7 @@ get_header();
             <?php echo awards_gallery_eyebrow(__('Error 404', 'awards-gallery-theme')); // phpcs:ignore ?>
         </div>
         <div class="animate-rise hidden sm:block" style="animation-delay:.1s">
-            <?php echo awards_gallery_eyebrow(__('Error POgi · Page Not Found', 'awards-gallery-theme')); // phpcs:ignore ?>
+            <?php echo awards_gallery_eyebrow(__('Error 404 · Page Not Found', 'awards-gallery-theme')); // phpcs:ignore ?>
         </div>
 
         <h1 class="mt-8 flex flex-col items-center leading-none">

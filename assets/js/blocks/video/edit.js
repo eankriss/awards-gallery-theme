@@ -54,7 +54,6 @@ export default function Edit({ attributes, setAttributes }) {
           {attributes.showMark ? (
             <MediaField label={__('Logo image', 'awards-gallery-theme')} value={attributes.mark} onChange={set('mark')} />
           ) : null}
-          <TextControl label={__('Section ID (anchor)', 'awards-gallery-theme')} value={attributes.sectionId} onChange={set('sectionId')} />
         </PanelBody>
       </InspectorControls>
 

@@ -15,9 +15,6 @@ if (!$url && awards_gallery_contact('ag_email')) {
 }
 
 $wrapper = ['class' => 'relative bg-gold-sheen py-20 text-ink lg:py-20'];
-if (!empty($attributes['sectionId'])) {
-    $wrapper['id'] = sanitize_title($attributes['sectionId']);
-}
 ?>
 <section <?php echo get_block_wrapper_attributes($wrapper); ?>>
   <div class="reveal mx-auto flex max-w-4xl flex-col items-center px-5 text-center">

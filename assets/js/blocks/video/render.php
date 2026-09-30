@@ -19,9 +19,6 @@ $embed    = !$file && $link ? awards_gallery_video_embed_url($link, $autoplay, $
 $src      = $file ?: ($embed ? '' : $link);
 
 $wrapper = ['class' => 'relative aspect-video overflow-hidden bg-black lg:aspect-[1440/990]'];
-if (!empty($attributes['sectionId'])) {
-    $wrapper['id'] = sanitize_title($attributes['sectionId']);
-}
 ?>
 <section <?php echo get_block_wrapper_attributes($wrapper); ?>>
   <?php if ($embed) : ?>

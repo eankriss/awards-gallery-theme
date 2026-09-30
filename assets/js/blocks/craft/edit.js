@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, TextControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
-import { MediaField, Repeater } from '../_shared/controls';
+import { Repeater } from '../_shared/controls';
 
 export default function Edit({ attributes, setAttributes }) {
   const set = (key) => (value) => setAttributes({ [key]: value });
@@ -12,8 +12,6 @@ export default function Edit({ attributes, setAttributes }) {
       <InspectorControls>
         <PanelBody title={__('Intro', 'awards-gallery-theme')} initialOpen>
           <TextControl label={__('Eyebrow', 'awards-gallery-theme')} value={attributes.eyebrow} onChange={set('eyebrow')} />
-          <MediaField label={__('Background image', 'awards-gallery-theme')} value={attributes.background} onChange={set('background')} />
-          <TextControl label={__('Section ID (anchor)', 'awards-gallery-theme')} value={attributes.sectionId} onChange={set('sectionId')} />
         </PanelBody>
         <PanelBody title={__('Cards', 'awards-gallery-theme')} initialOpen={false}>
           <Repeater
