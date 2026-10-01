@@ -70,6 +70,69 @@
 	// Reveal on scroll + stat count-up
 	var reduce = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 
+	// Timeline: the gold line fills as the page scrolls; a milestone lights up once the
+	// fill passes its dot. The fill tip tracks a line 60% down the viewport.
+	// Reduced motion: the line is drawn full and every milestone stays lit.
+	document.querySelectorAll( '[data-timeline]' ).forEach( function ( list ) {
+		var rail = list.querySelector( '[data-timeline-rail]' );
+		var rows = list.querySelectorAll( '[data-timeline-item]' );
+		if ( ! rail || rows.length < 2 ) {
+			return;
+		}
+		var dots = [];
+		var railTop = 0;
+		var railHeight = 0;
+		var ticking = false;
+
+		// Stretch the rail from the first dot's centre to the last's.
+		var measure = function () {
+			var box = list.getBoundingClientRect();
+			dots = Array.prototype.map.call( rows, function ( row ) {
+				var r = row.querySelector( '[data-timeline-dot]' ).getBoundingClientRect();
+				return { x: r.left + r.width / 2 - box.left, y: r.top + r.height / 2 - box.top };
+			} );
+			railTop = dots[ 0 ].y;
+			railHeight = dots[ dots.length - 1 ].y - railTop;
+			rail.style.left = dots[ 0 ].x + 'px';
+			rail.style.top = railTop + 'px';
+			rail.style.height = railHeight + 'px';
+			rail.classList.remove( 'hidden' );
+		};
+
+		var update = function () {
+			ticking = false;
+			var tip = reduce ? Infinity : window.innerHeight * 0.6 - list.getBoundingClientRect().top - railTop;
+			var progress = Math.max( 0, Math.min( 1, tip / railHeight ) );
+			list.style.setProperty( '--timeline-progress', progress );
+			rows.forEach( function ( row, i ) {
+				// Small tolerance so a dot lights as the tip reaches it, not just after.
+				row.classList.toggle( 'is-off', dots[ i ].y - railTop > tip + 2 );
+			} );
+		};
+
+		var onScroll = function () {
+			if ( ! ticking ) {
+				ticking = true;
+				requestAnimationFrame( update );
+			}
+		};
+
+		measure();
+		update();
+		window.addEventListener( 'scroll', onScroll, { passive: true } );
+		window.addEventListener( 'resize', function () {
+			measure();
+			onScroll();
+		} );
+		// Web fonts can change line heights after load; re-measure once they settle.
+		if ( document.fonts && document.fonts.ready ) {
+			document.fonts.ready.then( function () {
+				measure();
+				onScroll();
+			} );
+		}
+	} );
+
 	function countUp( el ) {
 		var end = +el.dataset.count;
 		var suffix = el.dataset.suffix || '';

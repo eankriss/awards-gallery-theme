@@ -1,0 +1,114 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/product-grid",
+  "title": "Awards Gallery Product Grid",
+  "category": "design",
+  "icon": "screenoptions",
+  "description": "Bordered grid of product cards: image, kicker, title, description and a details link.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "linkText": {
+      "type": "string",
+      "default": "See Details"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "kicker": "Lightweight Brilliance",
+          "title": "Acrylic Award",
+          "text": "Crystal-clear acrylic panels laser-engraved with surgical precision. Infinitely shapeable, built to last a lifetime.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-acrylic.jpg"
+        },
+        {
+          "kicker": "Enduring Clarity",
+          "title": "Crystal Award",
+          "text": "Solid optical crystal that bends light into brilliance. A trophy that announces excellence from across the room.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-crystal.jpg"
+        },
+        {
+          "kicker": "Timeless Elegance",
+          "title": "Glass Award",
+          "text": "Precision-cut glass with refined detailing. The classic form of recognition, elevated to modern distinction.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-glass.jpg"
+        },
+        {
+          "kicker": "Infinite Imagination",
+          "title": "Resin Award",
+          "text": "Our most versatile medium. Intricate shapes, embedded elements, and full-color finishes — all possible.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-resin.jpg"
+        },
+        {
+          "kicker": "Premium Composite",
+          "title": "Synthetic Award",
+          "text": "Advanced composites that replicate the weight and finish of stone or metal. Commanding presence, considered price.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-synthetic.jpg"
+        },
+        {
+          "kicker": "Natural Authority",
+          "title": "Wood Award",
+          "text": "Warm-grain hardwood engraved with laser precision. A nod to legacy, tradition, and lasting honor.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-wood.jpg"
+        },
+        {
+          "kicker": "Distinction in Detail",
+          "title": "Metal Medals",
+          "text": "Custom-crafted medals with refined finishes and intricate detailing—made to commemorate achievements, milestones.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-medals.jpg"
+        },
+        {
+          "kicker": "Signature Presence",
+          "title": "Acrylic Table Sign",
+          "text": "Custom-designed tabletop signage crafted for lasting visibility—ideal for executive desks, events, counters, and distinguished spaces.",
+          "url": "",
+          "image": {
+            "id": 0,
+            "url": ""
+          },
+          "imageUrl": "award-table-sign.jpg"
+        }
+      ]
+    }
+  }
+}

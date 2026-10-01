@@ -64,4 +64,4 @@ $site_name = get_bloginfo('name');
     </aside>
 </div>
 
-<main id="main" tabindex="-1" class="site-main focus:outline-none<?php echo is_front_page() ? '' : ' pt-20'; ?>">
+<main id="main" tabindex="-1" class="site-main focus:outline-none<?php echo awards_gallery_starts_with_hero() ? '' : ' pt-20'; ?>">

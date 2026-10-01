@@ -1,0 +1,73 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/about-intro",
+  "title": "Awards Gallery Who We Are",
+  "category": "design",
+  "icon": "groups",
+  "description": "Image with a gold badge beside an eyebrow, two-part heading, intro text and a grid of feature cards.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Who We Are"
+    },
+    "heading": {
+      "type": "string",
+      "default": "A Family Business Build on"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "Craft & Pride"
+    },
+    "text": {
+      "type": "string",
+      "default": "Awards Gallery Philippines was founded in the early 1950s by a family of master engravers who believed that recognition deserved something real — something you could hold, feel the weight of, and keep for a lifetime."
+    },
+    "image": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": "about-trophies.jpg"
+    },
+    "badgeValue": {
+      "type": "string",
+      "default": "1950s"
+    },
+    "badgeLabel": {
+      "type": "string",
+      "default": "Family Legacy"
+    },
+    "features": {
+      "type": "array",
+      "default": [
+        {
+          "title": "Expertise",
+          "text": "70+ years of hands-on engraving mastery — three generations of Filipino artisans."
+        },
+        {
+          "title": "Creative & Custom",
+          "text": "We don't do cookie-cutter. Every award is an original built around your vision."
+        },
+        {
+          "title": "Top-Grade Materials",
+          "text": "Modern and traditional techniques applied to only the finest materials available."
+        },
+        {
+          "title": "Timely Delivery",
+          "text": "Standard 5–10 working day lead time. Rush orders accommodated when available."
+        }
+      ]
+    }
+  }
+}

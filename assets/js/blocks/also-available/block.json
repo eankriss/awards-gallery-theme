@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/also-available",
+  "title": "Awards Gallery Also Available",
+  "category": "design",
+  "icon": "list-view",
+  "description": "\"Beyond the Trophy Case\" intro with a grid of icon + title + text items.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Also Available"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Beyond the"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "Trophy Case"
+    },
+    "text": {
+      "type": "string",
+      "default": "Our craft extends beyond awards — from military ceremonial pieces to everyday corporate identity items."
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "icon": "medal",
+          "title": "Medals, Pins & Keychains",
+          "text": "Precision-struck recognition pieces for sports, corporate, and military use."
+        },
+        {
+          "icon": "landmark",
+          "title": "Building Markers & Signages",
+          "text": "Architectural signage crafted from premium materials to represent your institution."
+        },
+        {
+          "icon": "plate",
+          "title": "Car Plates & Desk Signs",
+          "text": "Custom-engraved identification plates for vehicles, offices, and desks."
+        },
+        {
+          "icon": "sword",
+          "title": "Military Sword & Saber",
+          "text": "Ceremonial blades crafted with precision and reverence for military tradition."
+        },
+        {
+          "icon": "gift",
+          "title": "Corporate Giveaways",
+          "text": "Branded keepsakes that leave a lasting impression on clients and employees."
+        },
+        {
+          "icon": "message",
+          "title": "Custom Inquiries",
+          "text": "Have a unique project in mind? Reach out and we'll figure it out together."
+        }
+      ]
+    }
+  }
+}

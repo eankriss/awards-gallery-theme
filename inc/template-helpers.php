@@ -96,3 +96,27 @@ function awards_gallery_video_embed_url($url, $autoplay = true, $controls = fals
 
     return '';
 }
+
+/**
+ * Whether the current page should start flush under the fixed header: the
+ * homepage, or any single page/post whose first block is a hero. Those heroes
+ * pad their own top to clear the header, so <main> skips its pt-20 offset and
+ * the hero image fills the space the header uncovers as it shrinks and grows.
+ */
+function awards_gallery_starts_with_hero()
+{
+    if (is_front_page()) {
+        return true;
+    }
+    if (!is_singular()) {
+        return false;
+    }
+
+    // parse_blocks() returns whitespace between blocks as nameless entries; skip them.
+    foreach (parse_blocks(get_post_field('post_content', get_queried_object_id())) as $block) {
+        if (!empty($block['blockName'])) {
+            return in_array($block['blockName'], ['awards-gallery/hero', 'awards-gallery/page-hero'], true);
+        }
+    }
+    return false;
+}

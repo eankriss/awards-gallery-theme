@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/timeline",
+  "title": "Awards Gallery Timeline",
+  "category": "design",
+  "icon": "backup",
+  "description": "\"Our Journey\" vertical timeline of years, titles and descriptions.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Our Journey"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Seven Decades"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "Of Excellence"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "year": "1950s",
+          "title": "The Beginning",
+          "text": "A family of master engravers starts a small workshop in Metro Manila, crafting medals and plaques entirely by hand."
+        },
+        {
+          "year": "1970s",
+          "title": "Growing Reputation",
+          "text": "Word spreads. Schools, government institutions, and corporations begin seeking our craftsmanship for their most prestigious events."
+        },
+        {
+          "year": "1990s",
+          "title": "Second Generation",
+          "text": "The founder's children join the business, introducing modern techniques while preserving the handcrafted soul of every piece."
+        },
+        {
+          "year": "2000s",
+          "title": "Going Corporate",
+          "text": "We expand into large-scale corporate recognition programs, serving some of the Philippines' biggest companies nationwide."
+        },
+        {
+          "year": "2010s",
+          "title": "Third Generation",
+          "text": "Laser engraving, UV printing, and CNC cutting are integrated — without compromising the artisan identity of Awards Gallery."
+        },
+        {
+          "year": "Today",
+          "title": "Awards Gallery PH",
+          "text": "Over 70 years on, we remain a family business. Every award we make still carries three generations of pride."
+        }
+      ]
+    }
+  }
+}
