@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/faq",
+  "title": "Awards Gallery FAQ",
+  "category": "design",
+  "icon": "editor-help",
+  "description": "Frequently asked questions as an accordion.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Frequently Asked Questions"
+    },
+    "text": {
+      "type": "string",
+      "default": "Find answers to common questions about our awards, services, and ordering process"
+    },
+    "singleOpen": {
+      "type": "boolean",
+      "default": true
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "question": "Are glass plaque available in a variety of shapes and sizes?",
+          "answer": ""
+        },
+        {
+          "question": "Is there a warranty included on your plaques?",
+          "answer": ""
+        },
+        {
+          "question": "Can i choose different colors for the glass plaques?",
+          "answer": ""
+        },
+        {
+          "question": "What is the difference between glass and crystal trophies?",
+          "answer": ""
+        },
+        {
+          "question": "How long does it take to receive a personalized glass trophy after placing an order?",
+          "answer": ""
+        },
+        {
+          "question": "Do you offer a warranty for your trophies?",
+          "answer": ""
+        }
+      ]
+    }
+  }
+}

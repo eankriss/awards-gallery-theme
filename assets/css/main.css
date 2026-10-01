@@ -29,6 +29,17 @@
     @apply inline-flex h-14 items-center justify-center bg-gold-dark px-12 text-xs uppercase tracking-[0.3em] text-cream transition duration-300 hover:-translate-y-0.5 hover:bg-[#86592a] hover:text-cream sm:text-[15px];
   }
 
+  /*
+   * 1px gold-gradient outline (same stops as bg-gold-line) on an ink-900 fill.
+   * Set --line-alpha (e.g. hover:[--line-alpha:0.7]) to soften the outline.
+   */
+  .border-gold-line {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(theme("colors.ink.900"), theme("colors.ink.900")) padding-box,
+      linear-gradient(90deg, rgba(218, 147, 40, var(--line-alpha, 1)) 16%, rgba(255, 201, 58, var(--line-alpha, 1)) 71%) border-box;
+  }
+
   .btn-dark-outline {
     @apply inline-flex h-14 items-center justify-center border-2 border-gold-dark px-12 text-xs uppercase tracking-[0.3em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-gold-dark hover:text-white sm:text-[15px];
   }

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/post-collection",
+  "title": "Awards Gallery Post Collection",
+  "category": "design",
+  "icon": "excerpt-view",
+  "description": "Featured post on top (from the Featured category) and a grid of the latest posts of any post type below.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "postType": {
+      "type": "string",
+      "default": "post"
+    },
+    "postsPerPage": {
+      "type": "number",
+      "default": 6
+    },
+    "showFeatured": {
+      "type": "boolean",
+      "default": true
+    },
+    "featuredCategory": {
+      "type": "string",
+      "default": "featured"
+    },
+    "featuredLabel": {
+      "type": "string",
+      "default": "Featured"
+    },
+    "featuredLinkText": {
+      "type": "string",
+      "default": "Read Article"
+    },
+    "linkText": {
+      "type": "string",
+      "default": "Read More"
+    },
+    "showPagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "emptyText": {
+      "type": "string",
+      "default": "No posts yet. Check back soon."
+    }
+  }
+}

@@ -28,7 +28,7 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label={__('Button text', 'awards-gallery-theme')} value={attributes.secondaryButtonText} onChange={set('secondaryButtonText')} />
           <TextControl
             label={__('Button URL', 'awards-gallery-theme')}
-            help={__('Leave text or URL empty to hide this button.', 'awards-gallery-theme')}
+            help={__('Leave empty to email the address set in Customizer → Contact & Footer.', 'awards-gallery-theme')}
             value={attributes.secondaryButtonUrl}
             onChange={set('secondaryButtonUrl')}
           />

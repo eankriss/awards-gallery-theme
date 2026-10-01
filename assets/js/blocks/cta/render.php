@@ -14,10 +14,14 @@ if (!$url && awards_gallery_contact('ag_email')) {
     $url = 'mailto:' . awards_gallery_contact('ag_email');
 }
 
+// Both buttons work the same way: no text → no button; no URL → email the Customizer address.
 $secondary_text = $attributes['secondaryButtonText'] ?? '';
 $secondary_url  = $attributes['secondaryButtonUrl'] ?? '';
+if (!$secondary_url && awards_gallery_contact('ag_email')) {
+    $secondary_url = 'mailto:' . awards_gallery_contact('ag_email');
+}
 $show_primary   = !empty($attributes['buttonText']);
-$show_secondary = $secondary_text && $secondary_url;
+$show_secondary = !empty($secondary_text);
 
 $wrapper = ['class' => 'relative bg-gold-sheen py-20 text-ink lg:py-20'];
 ?>
@@ -38,7 +42,7 @@ $wrapper = ['class' => 'relative bg-gold-sheen py-20 text-ink lg:py-20'];
           <a href="<?php echo esc_url($url ?: '#'); ?>" class="btn-dark"><?php echo esc_html($attributes['buttonText']); ?></a>
         <?php endif; ?>
         <?php if ($show_secondary) : ?>
-          <a href="<?php echo esc_url($secondary_url); ?>" class="btn-dark-outline"><?php echo esc_html($secondary_text); ?></a>
+          <a href="<?php echo esc_url($secondary_url ?: '#'); ?>" class="btn-dark-outline"><?php echo esc_html($secondary_text); ?></a>
         <?php endif; ?>
       </div>
     <?php endif; ?>

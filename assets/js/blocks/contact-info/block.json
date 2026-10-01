@@ -1,0 +1,87 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/contact-info",
+  "title": "Awards Gallery Contact Info",
+  "category": "design",
+  "icon": "location",
+  "description": "Contact cards, business hours and a tip on the left; a form area (inner blocks, e.g. a form shortcode) on the right.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "cards": {
+      "type": "array",
+      "default": [
+        {
+          "icon": "pin",
+          "title": "Visit Us",
+          "text": "A-2 A. Sandoval Avenue\nPalatiw, Pasig 1600\nMetro Manila, Philippines",
+          "url": ""
+        },
+        {
+          "icon": "phone",
+          "title": "Call Us",
+          "text": "(02) 7587-2248\n(0917) 637-5394",
+          "url": ""
+        },
+        {
+          "icon": "mail",
+          "title": "Email",
+          "text": "awardsgalleryph@gmail.com",
+          "url": "mailto:awardsgalleryph@gmail.com"
+        },
+        {
+          "icon": "message",
+          "title": "Facebook",
+          "text": "facebook.com/AwardsGallery.ph",
+          "url": "https://facebook.com/AwardsGallery.ph"
+        }
+      ]
+    },
+    "hoursTitle": {
+      "type": "string",
+      "default": "Business Hours"
+    },
+    "hours": {
+      "type": "array",
+      "default": [
+        {
+          "day": "Monday – Friday",
+          "time": "8:00 AM – 6:00 PM"
+        },
+        {
+          "day": "Saturday",
+          "time": "9:00 AM – 4:00 PM"
+        },
+        {
+          "day": "Sunday",
+          "time": "Closed"
+        }
+      ]
+    },
+    "tipTitle": {
+      "type": "string",
+      "default": "Quick Tip"
+    },
+    "tipText": {
+      "type": "string",
+      "default": "Include your target event date, quantity, and material preference for a faster, more accurate quote."
+    },
+    "formTitle": {
+      "type": "string",
+      "default": "Inquiry Form"
+    },
+    "formLabel": {
+      "type": "string",
+      "default": "24–48hr Response"
+    },
+    "formNote": {
+      "type": "string",
+      "default": "We respond within 24–48 hours. No spam. No commitment required."
+    }
+  }
+}
