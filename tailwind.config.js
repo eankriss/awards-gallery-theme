@@ -24,6 +24,7 @@ module.exports = {
       backgroundImage: {
         "gold-gradient": "linear-gradient(106deg, rgba(218, 147, 40, 0.9) 31%, #FFC93A 100%)",
         "gold-sheen": "linear-gradient(115deg, #DC952A 0%, #F0B833 45%, #DC952A 100%)",
+        "gold-line": "linear-gradient(90deg, #DA9328 16%, #FFC93A 71%)",
         "ink-sheen": "linear-gradient(180deg, #0A0908 0%, #111009 50%, #0A0908 100%)"
       },
       maxWidth: { shell: "1440px" },

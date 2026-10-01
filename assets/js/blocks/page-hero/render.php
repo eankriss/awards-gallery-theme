@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 
 $bg = awards_gallery_media_url($attributes);
 ?>
-<section <?php echo get_block_wrapper_attributes(['class' => 'relative isolate flex min-h-[420px] items-center overflow-hidden border-b border-gold/30 pb-16 pt-32 lg:min-h-[555px] lg:pb-20 lg:pt-36']); ?>>
+<section <?php echo get_block_wrapper_attributes(['class' => 'relative isolate flex min-h-[420px] items-center overflow-hidden pb-16 pt-32 lg:min-h-[555px] lg:pb-20 lg:pt-36']); ?>>
   <?php if ($bg) : ?>
     <img src="<?php echo esc_url($bg); ?>" alt="" class="absolute inset-0 -z-20 h-full w-full scale-105 object-cover opacity-50 blur-[2px]" fetchpriority="high">
   <?php endif; ?>

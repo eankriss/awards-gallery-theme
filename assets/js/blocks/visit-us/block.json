@@ -1,0 +1,58 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/visit-us",
+  "title": "Awards Gallery Visit Us",
+  "category": "design",
+  "icon": "location-alt",
+  "description": "\"Find Us\" intro with address, hours and phone beside an embedded map.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Find Us"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Visit to"
+    },
+    "headingScript": {
+      "type": "string",
+      "default": "our Workshop"
+    },
+    "text": {
+      "type": "string",
+      "default": "We welcome walk-in clients. See our materials and craftsmanship up close before placing your order."
+    },
+    "details": {
+      "type": "array",
+      "default": [
+        {
+          "icon": "pin",
+          "text": "A-2 A. Sandoval Avenue, Palatiw, Pasig 1600"
+        },
+        {
+          "icon": "clock",
+          "text": "Mon–Fri: 8AM–6PM · Sat: 9AM–4PM"
+        },
+        {
+          "icon": "phone",
+          "text": "(02) 7587-2248 · (0917) 637-5394"
+        }
+      ]
+    },
+    "mapEmbed": {
+      "type": "string",
+      "default": ""
+    },
+    "mapTitle": {
+      "type": "string",
+      "default": "Awards Gallery Philippines on Google Maps"
+    }
+  }
+}
