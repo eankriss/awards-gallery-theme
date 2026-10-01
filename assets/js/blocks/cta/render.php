@@ -14,6 +14,11 @@ if (!$url && awards_gallery_contact('ag_email')) {
     $url = 'mailto:' . awards_gallery_contact('ag_email');
 }
 
+$secondary_text = $attributes['secondaryButtonText'] ?? '';
+$secondary_url  = $attributes['secondaryButtonUrl'] ?? '';
+$show_primary   = !empty($attributes['buttonText']);
+$show_secondary = $secondary_text && $secondary_url;
+
 $wrapper = ['class' => 'relative bg-gold-sheen py-20 text-ink lg:py-20'];
 ?>
 <section <?php echo get_block_wrapper_attributes($wrapper); ?>>
@@ -27,8 +32,15 @@ $wrapper = ['class' => 'relative bg-gold-sheen py-20 text-ink lg:py-20'];
     <?php if (!empty($attributes['text'])) : ?>
       <p class="mt-4 text-base leading-relaxed text-ink/75"><?php echo esc_html($attributes['text']); ?></p>
     <?php endif; ?>
-    <?php if (!empty($attributes['buttonText'])) : ?>
-      <a href="<?php echo esc_url($url ?: '#'); ?>" class="btn-dark mt-8"><?php echo esc_html($attributes['buttonText']); ?></a>
+    <?php if ($show_primary || $show_secondary) : ?>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <?php if ($show_primary) : ?>
+          <a href="<?php echo esc_url($url ?: '#'); ?>" class="btn-dark"><?php echo esc_html($attributes['buttonText']); ?></a>
+        <?php endif; ?>
+        <?php if ($show_secondary) : ?>
+          <a href="<?php echo esc_url($secondary_url); ?>" class="btn-dark-outline"><?php echo esc_html($secondary_text); ?></a>
+        <?php endif; ?>
+      </div>
     <?php endif; ?>
   </div>
 </section>

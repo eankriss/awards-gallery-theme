@@ -29,6 +29,10 @@
     @apply inline-flex h-14 items-center justify-center bg-gold-dark px-12 text-xs uppercase tracking-[0.3em] text-cream transition duration-300 hover:-translate-y-0.5 hover:bg-[#86592a] hover:text-cream sm:text-[15px];
   }
 
+  .btn-dark-outline {
+    @apply inline-flex h-14 items-center justify-center border-2 border-gold-dark px-12 text-xs uppercase tracking-[0.3em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-gold-dark hover:text-white sm:text-[15px];
+  }
+
   /*
    * Film-grain overlay matching the Figma "Noise" effect (mono, size 0.5,
    * density 95%, #B0B0B0 at 15%). Sits between the section background and
@@ -81,6 +85,16 @@ p.wp-block-paragraph { @apply mb-5 leading-relaxed; }
 
 .entry-content a:not([class]),
 p.wp-block-paragraph a { @apply text-gold underline underline-offset-4; }
+
+/*
+ * Logged-in users: WordPress pushes the page down by the admin bar's height,
+ * so the fixed header and mobile drawer must sit below the bar too — otherwise
+ * the bar hides the header's top and leaves a gap above the first section.
+ */
+.admin-bar [data-header],
+.admin-bar [data-drawer] {
+  top: var(--wp-admin--admin-bar--height, 32px);
+}
 
 /* Scroll-reveal — JS adds .is-in; without JS everything stays visible. */
 .reveal {
