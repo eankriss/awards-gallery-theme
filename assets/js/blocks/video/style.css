@@ -1,1 +1,94 @@
 /* Block styles — layout is Tailwind utilities in render.php. */
+
+/* Themed player (click-to-play MP4s). State lives in data attributes set by awards-gallery.js. */
+.ag-player[data-state="playing"] [data-icon="play"],
+.ag-player:not([data-state="playing"]) [data-icon="pause"],
+.ag-player[data-muted] [data-icon="vol"],
+.ag-player:not([data-muted]) [data-icon="muted"],
+.ag-player[data-fullscreen] [data-icon="fs-enter"],
+.ag-player:not([data-fullscreen]) [data-icon="fs-exit"] {
+  display: none;
+}
+
+.ag-player[data-state="playing"] .ag-player__big {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.85);
+}
+
+.ag-player.is-idle {
+  cursor: none;
+}
+
+.ag-player.is-idle .ag-player__bar {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Fullscreen shows the whole frame instead of cropping to cover. */
+.wp-block-awards-gallery-video:fullscreen video {
+  object-fit: contain;
+}
+
+/* Range sliders: gold fill up to --fill, cream track after. */
+.ag-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 9999px;
+  background:
+    linear-gradient(90deg, #DA9328 16%, #FFC93A 100%) 0 / var(--fill, 0%) 100% no-repeat,
+    rgba(245, 240, 232, 0.22);
+  cursor: pointer;
+  transition: height 0.15s ease;
+}
+
+.ag-range--seek:hover,
+.ag-range--seek:focus-visible {
+  height: 6px;
+}
+
+.ag-range:focus-visible {
+  outline: 2px solid #DA9328;
+  outline-offset: 6px;
+}
+
+.ag-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: #F5F0E8;
+  box-shadow: 0 0 0 4px rgba(218, 147, 40, 0.35);
+  transition: transform 0.15s ease;
+}
+
+.ag-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: #F5F0E8;
+  box-shadow: 0 0 0 4px rgba(218, 147, 40, 0.35);
+  transition: transform 0.15s ease;
+}
+
+.ag-range:hover::-webkit-slider-thumb,
+.ag-range:focus-visible::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.ag-range:hover::-moz-range-thumb,
+.ag-range:focus-visible::-moz-range-thumb {
+  transform: scale(1.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-player__big,
+  .ag-player__bar,
+  .ag-range,
+  .ag-range::-webkit-slider-thumb {
+    transition: none;
+  }
+}

@@ -69,32 +69,48 @@ function awards_gallery_eyebrow($text, $tone = 'text-gold', $rule = 'via-gold/70
 /**
  * Embed URL for a YouTube or Vimeo link, or '' for anything else.
  * Autoplaying embeds are muted and looped so browsers allow them to start.
+ * With $sound the player accepts postMessage commands so a button can unmute it.
+ * With $on_click the player is injected after a click, so it starts at once with sound.
  */
-function awards_gallery_video_embed_url($url, $autoplay = true, $controls = false)
+function awards_gallery_video_embed_url($url, $autoplay = true, $controls = false, $sound = false, $on_click = false)
 {
-    if (preg_match('~(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([\w-]{11})~', $url, $m)) {
+    $start = $autoplay || $on_click;
+
+    if ($id = awards_gallery_youtube_id($url)) {
         return add_query_arg([
-            'autoplay'       => $autoplay ? 1 : 0,
+            'autoplay'       => $start ? 1 : 0,
             'mute'           => $autoplay ? 1 : 0,
             'loop'           => $autoplay ? 1 : 0,
-            'playlist'       => $m[1],
+            'playlist'       => $id,
             'controls'       => $controls ? 1 : 0,
             'rel'            => 0,
             'modestbranding' => 1,
             'playsinline'    => 1,
-        ], 'https://www.youtube-nocookie.com/embed/' . $m[1]);
+            'enablejsapi'    => $sound ? 1 : 0,
+        ], 'https://www.youtube-nocookie.com/embed/' . $id);
     }
 
     if (preg_match('~vimeo\.com/(?:video/)?(\d+)~', $url, $m)) {
+        // Vimeo's background mode locks the audio off, so hide the UI piece by piece instead.
+        $chromeless = $autoplay && !$controls;
         return add_query_arg([
-            'autoplay'   => $autoplay ? 1 : 0,
+            'autoplay'   => $start ? 1 : 0,
             'muted'      => $autoplay ? 1 : 0,
             'loop'       => $autoplay ? 1 : 0,
-            'background' => ($autoplay && !$controls) ? 1 : 0,
+            'background' => ($chromeless && !$sound) ? 1 : 0,
+            'controls'   => ($chromeless && $sound) ? 0 : 1,
         ], 'https://player.vimeo.com/video/' . $m[1]);
     }
 
     return '';
+}
+
+/**
+ * YouTube video ID from a watch / share / embed / shorts link, or ''.
+ */
+function awards_gallery_youtube_id($url)
+{
+    return preg_match('~(?:youtube\.com/(?:watch\?v=|embed/|shorts/)|youtu\.be/)([\w-]{11})~', $url, $m) ? $m[1] : '';
 }
 
 /**
