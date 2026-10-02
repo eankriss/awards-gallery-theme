@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, TextControl } from '@wordpress/components';
+import { PanelBody, TextControl, ToggleControl, RangeControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 import { Repeater } from '../_shared/controls';
 
@@ -16,6 +16,33 @@ export default function Edit({ attributes, setAttributes }) {
           <TextControl label={__('Heading (gold part)', 'awards-gallery-theme')} value={attributes.headingScript} onChange={set('headingScript')} />
         </PanelBody>
         <PanelBody title={__('Testimonials', 'awards-gallery-theme')} initialOpen={false}>
+          <ToggleControl
+            label={__('Show as carousel', 'awards-gallery-theme')}
+            help={__('Swipe on phones; arrows and dots appear when there are more cards than fit on screen. Off shows a fixed 3-column grid.', 'awards-gallery-theme')}
+            checked={attributes.carousel}
+            onChange={set('carousel')}
+            __nextHasNoMarginBottom
+          />
+          {attributes.carousel ? (
+            <ToggleControl
+              label={__('Auto-slide', 'awards-gallery-theme')}
+              help={__('Pauses on hover, while swiping and off screen. Visitors also get a pause button.', 'awards-gallery-theme')}
+              checked={attributes.autoplay}
+              onChange={set('autoplay')}
+              __nextHasNoMarginBottom
+            />
+          ) : null}
+          {attributes.carousel && attributes.autoplay ? (
+            <RangeControl
+              label={__('Seconds per slide', 'awards-gallery-theme')}
+              value={attributes.autoplaySeconds}
+              onChange={set('autoplaySeconds')}
+              min={3}
+              max={15}
+              step={1}
+              __nextHasNoMarginBottom
+            />
+          ) : null}
           <Repeater
             items={attributes.items}
             onChange={set('items')}

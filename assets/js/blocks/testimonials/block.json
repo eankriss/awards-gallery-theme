@@ -25,6 +25,18 @@
       "type": "string",
       "default": "Our Clients"
     },
+    "carousel": {
+      "type": "boolean",
+      "default": true
+    },
+    "autoplay": {
+      "type": "boolean",
+      "default": false
+    },
+    "autoplaySeconds": {
+      "type": "number",
+      "default": 5
+    },
     "items": {
       "type": "array",
       "default": [

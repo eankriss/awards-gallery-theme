@@ -402,6 +402,149 @@
 		} );
 	} );
 
+	// Carousels: native scroll-snap does the sliding and swiping; this adds arrows + dots.
+	document.querySelectorAll( '[data-carousel]' ).forEach( function ( root ) {
+		var track = root.querySelector( '[data-carousel-track]' );
+		var nav = root.querySelector( '[data-carousel-nav]' );
+		var dotsWrap = root.querySelector( '[data-carousel-dots]' );
+		var prev = root.querySelector( '[data-carousel-prev]' );
+		var next = root.querySelector( '[data-carousel-next]' );
+		var cards = Array.prototype.slice.call( track.children );
+		var dots = [];
+		if ( ! cards.length ) {
+			return;
+		}
+
+		var step = function () {
+			return cards.length > 1 ? cards[ 1 ].offsetLeft - cards[ 0 ].offsetLeft : track.clientWidth;
+		};
+		var maxScroll = function () {
+			return track.scrollWidth - track.clientWidth;
+		};
+		// How many positions there are: one per card, minus the cards already in view at the end.
+		var pages = function () {
+			return Math.round( maxScroll() / step() ) + 1;
+		};
+		var current = function () {
+			return Math.round( track.scrollLeft / step() );
+		};
+		var go = function ( i ) {
+			track.scrollTo( { left: Math.max( 0, Math.min( i, pages() - 1 ) ) * step(), behavior: reduce ? 'auto' : 'smooth' } );
+		};
+
+		var update = function () {
+			var i = current();
+			var end = track.scrollLeft >= maxScroll() - 2;
+			prev.disabled = track.scrollLeft <= 2;
+			next.disabled = end;
+			dots.forEach( function ( dot, d ) {
+				var on = end ? d === dots.length - 1 : d === i;
+				dot.classList.toggle( 'w-8', on );
+				dot.classList.toggle( 'bg-gold', on );
+				dot.classList.toggle( 'w-2', ! on );
+				dot.classList.toggle( 'bg-cream/25', ! on );
+				dot.setAttribute( 'aria-current', on ? 'true' : 'false' );
+			} );
+		};
+
+		var build = function () {
+			var overflowing = maxScroll() > 2;
+			nav.classList.toggle( 'hidden', ! overflowing );
+			nav.classList.toggle( 'flex', overflowing );
+			dotsWrap.innerHTML = '';
+			dots = [];
+			if ( overflowing ) {
+				for ( var d = 0; d < pages(); d++ ) {
+					var dot = document.createElement( 'button' );
+					dot.type = 'button';
+					dot.className = 'h-2 w-2 rounded-full bg-cream/25 transition-all duration-300 hover:bg-gold/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold';
+					dot.setAttribute( 'aria-label', dotsWrap.getAttribute( 'data-label' ).replace( '%d', d + 1 ) );
+					dot.addEventListener( 'click', go.bind( null, d ) );
+					dotsWrap.appendChild( dot );
+					dots.push( dot );
+				}
+			}
+			update();
+		};
+
+		prev.addEventListener( 'click', function () { go( current() - 1 ); } );
+		next.addEventListener( 'click', function () { go( current() + 1 ); } );
+
+		var raf;
+		track.addEventListener( 'scroll', function () {
+			cancelAnimationFrame( raf );
+			raf = requestAnimationFrame( update );
+		}, { passive: true } );
+
+		var resizeTimer;
+		window.addEventListener( 'resize', function () {
+			clearTimeout( resizeTimer );
+			resizeTimer = setTimeout( build, 150 );
+		} );
+		build();
+
+		// Auto-slide: holds while hovered, touched, keyboard-focused, off screen or in a hidden tab.
+		var delay = parseInt( root.getAttribute( 'data-autoplay' ), 10 );
+		var pauseBtn = root.querySelector( '[data-carousel-pause]' );
+		if ( ! delay || reduce ) {
+			if ( pauseBtn ) {
+				pauseBtn.remove();
+			}
+			return;
+		}
+
+		var timer;
+		var hold = { hover: false, touch: false, focus: false, hidden: true, stopped: false };
+		var advance = function () {
+			go( track.scrollLeft >= maxScroll() - 2 ? 0 : current() + 1 );
+		};
+		var schedule = function () {
+			clearInterval( timer );
+			var held = Object.keys( hold ).some( function ( k ) { return hold[ k ]; } );
+			if ( ! held && ! document.hidden && maxScroll() > 2 ) {
+				timer = setInterval( advance, delay );
+			}
+		};
+		var set = function ( key, value ) {
+			hold[ key ] = value;
+			schedule();
+		};
+
+		root.addEventListener( 'mouseenter', function () { set( 'hover', true ); } );
+		root.addEventListener( 'mouseleave', function () { set( 'hover', false ); } );
+		track.addEventListener( 'touchstart', function () { set( 'touch', true ); }, { passive: true } );
+		track.addEventListener( 'touchend', function () { set( 'touch', false ); }, { passive: true } );
+		root.addEventListener( 'focusin', function ( e ) {
+			if ( e.target.matches( ':focus-visible' ) ) {
+				set( 'focus', true );
+			}
+		} );
+		root.addEventListener( 'focusout', function ( e ) {
+			if ( ! root.contains( e.relatedTarget ) ) {
+				set( 'focus', false );
+			}
+		} );
+		document.addEventListener( 'visibilitychange', schedule );
+		window.addEventListener( 'resize', function () { setTimeout( schedule, 200 ); } );
+		// A manual arrow / dot press restarts the countdown instead of sliding again right away.
+		[ prev, next, dotsWrap ].forEach( function ( el ) { el.addEventListener( 'click', schedule ); } );
+
+		if ( 'IntersectionObserver' in window ) {
+			new IntersectionObserver( function ( entries ) {
+				set( 'hidden', ! entries[ 0 ].isIntersecting );
+			}, { threshold: 0.3 } ).observe( root );
+		} else {
+			set( 'hidden', false );
+		}
+
+		pauseBtn.addEventListener( 'click', function () {
+			var stop = ! hold.stopped;
+			pauseBtn.setAttribute( 'aria-pressed', String( stop ) );
+			pauseBtn.setAttribute( 'aria-label', pauseBtn.getAttribute( stop ? 'data-label-play' : 'data-label-pause' ) );
+			set( 'stopped', stop );
+		} );
+	} );
+
 	var items = document.querySelectorAll( '.reveal' );
 	if ( reduce || ! ( 'IntersectionObserver' in window ) ) {
 		items.forEach( function ( el ) { el.classList.add( 'is-in' ); } );

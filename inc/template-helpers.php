@@ -127,6 +127,10 @@ function awards_gallery_starts_with_hero()
     if (!is_singular()) {
         return false;
     }
+    // Blog posts use single-post.php, which always opens with its own hero.
+    if (is_singular('post')) {
+        return true;
+    }
 
     // parse_blocks() returns whitespace between blocks as nameless entries; skip them.
     foreach (parse_blocks(get_post_field('post_content', get_queried_object_id())) as $block) {
@@ -135,4 +139,28 @@ function awards_gallery_starts_with_hero()
         }
     }
     return false;
+}
+
+/**
+ * The category to show for a post (badge, breadcrumb): its first category,
+ * skipping "Uncategorized" and the Featured category, which only drives layout.
+ */
+function awards_gallery_primary_category($post_id)
+{
+    $skip = ['uncategorized', function_exists('awards_gallery_featured_slug') ? awards_gallery_featured_slug() : 'featured'];
+    foreach (get_the_category($post_id) as $term) {
+        if (!in_array($term->slug, $skip, true)) {
+            return $term;
+        }
+    }
+    return null;
+}
+
+/**
+ * Blog listing URL: the Settings → Reading "Posts page" when set, else /blog/.
+ */
+function awards_gallery_blog_url()
+{
+    $page = (int) get_option('page_for_posts');
+    return $page ? get_permalink($page) : home_url('/blog/');
 }

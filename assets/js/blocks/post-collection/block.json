@@ -5,7 +5,7 @@
   "title": "Awards Gallery Post Collection",
   "category": "design",
   "icon": "excerpt-view",
-  "description": "Featured post on top (from the Featured category) and a grid of the latest posts of any post type below.",
+  "description": "Up to three featured posts on top (tagged Featured) and a grid of the latest posts of any post type below.",
   "editorScript": "file:./build/index.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
@@ -25,13 +25,17 @@
       "type": "boolean",
       "default": true
     },
-    "featuredCategory": {
+    "featuredCount": {
+      "type": "number",
+      "default": 3
+    },
+    "featuredTag": {
       "type": "string",
       "default": "featured"
     },
     "featuredLabel": {
       "type": "string",
-      "default": "Featured"
+      "default": ""
     },
     "featuredLinkText": {
       "type": "string",
