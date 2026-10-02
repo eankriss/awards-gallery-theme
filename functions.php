@@ -207,3 +207,7 @@ require_once get_theme_file_path('/inc/template-helpers.php');
 require_once get_theme_file_path('/inc/navigation.php');
 require_once get_theme_file_path('/inc/customizer.php');
 require_once get_theme_file_path('/inc/homepage.php');
+
+// Contact Form 7: the form templates use their own <div> layout (styled in main.css),
+// so stop CF7 from wrapping lines in <p>/<br>.
+add_filter('wpcf7_autop_or_not', '__return_false');

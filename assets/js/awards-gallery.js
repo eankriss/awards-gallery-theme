@@ -402,6 +402,58 @@
 		} );
 	} );
 
+	// Accordions (<details data-accordion>): animate the panel height instead of snapping.
+	// Without JS (or with reduced motion) the native <details> toggle still works.
+	if ( ! reduce ) {
+		var accordions = document.querySelectorAll( 'details[data-accordion]' );
+		var animateTo = function ( item, open ) {
+			var panel = item.querySelector( '[data-accordion-panel]' );
+			if ( item._anim ) {
+				item._anim.cancel();
+			}
+			var from = panel.offsetHeight;
+			if ( open ) {
+				item.open = true;
+			}
+			item.setAttribute( 'data-state', open ? 'open' : 'closing' );
+			var to = open ? panel.scrollHeight : 0;
+			item._anim = panel.animate(
+				[ { height: from + 'px', opacity: open ? 0.4 : 1 }, { height: to + 'px', opacity: open ? 1 : 0.4 } ],
+				{ duration: 320, easing: 'cubic-bezier(.2,.7,.2,1)' }
+			);
+			item._anim.onfinish = function () {
+				item._anim = null;
+				if ( ! open ) {
+					item.open = false;
+					item.removeAttribute( 'data-state' );
+				}
+			};
+		};
+
+		accordions.forEach( function ( item ) {
+			// Take over "one open at a time" from the native name attribute, which would
+			// snap the other item shut instead of animating it.
+			var group = item.getAttribute( 'name' );
+			if ( group ) {
+				item.setAttribute( 'data-accordion-group', group );
+				item.removeAttribute( 'name' );
+			}
+
+			item.querySelector( 'summary' ).addEventListener( 'click', function ( e ) {
+				e.preventDefault();
+				var opening = ! item.open || item.getAttribute( 'data-state' ) === 'closing';
+				if ( opening && group ) {
+					accordions.forEach( function ( other ) {
+						if ( other !== item && other.open && other.getAttribute( 'data-accordion-group' ) === group ) {
+							animateTo( other, false );
+						}
+					} );
+				}
+				animateTo( item, opening );
+			} );
+		} );
+	}
+
 	// Carousels: native scroll-snap does the sliding and swiping; this adds arrows + dots.
 	document.querySelectorAll( '[data-carousel]' ).forEach( function ( root ) {
 		var track = root.querySelector( '[data-carousel-track]' );
