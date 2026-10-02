@@ -124,6 +124,51 @@ p.wp-block-paragraph a { @apply text-gold underline underline-offset-4; }
 .article-content a:not([class]) { @apply text-gold underline underline-offset-4; }
 
 /*
+ * Contact Form 7 forms (Contacts → Inquiry Form). The form template lays fields
+ * out with .ag-cf7-grid / .ag-cf7-field / .ag-cf7-full; this restyles CF7's
+ * controls, validation tips and response box to match the dark/gold theme.
+ */
+.wpcf7 .ag-cf7-grid { @apply grid grid-cols-1 gap-5 sm:grid-cols-2; }
+.wpcf7 .ag-cf7-full { @apply sm:col-span-2; }
+.wpcf7 .ag-cf7-field label { @apply mb-2.5 block text-xs uppercase tracking-[0.25em] text-cream sm:text-[13px]; }
+.wpcf7 .ag-cf7-req { @apply text-cream; }
+.wpcf7 .wpcf7-form-control-wrap { @apply block; }
+.wpcf7 :is(input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"], select, textarea) {
+  @apply block w-full rounded-none border border-cream/25 bg-[#121110] px-4 py-3 text-sm text-cream transition [color-scheme:dark] placeholder:text-cream/50 hover:border-cream/45 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold;
+}
+/* Required fields carry a gold outline, optional ones stay neutral (as in the design). */
+.wpcf7 :is(input, select, textarea).wpcf7-validates-as-required { @apply border-gold/60 hover:border-gold/80 focus:border-gold; }
+.wpcf7 select:has(option[value=""]:checked) { @apply text-cream/50; }
+.wpcf7 select {
+  @apply appearance-none bg-no-repeat pr-10;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23DA9328' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+  background-position: right 1rem center;
+}
+.wpcf7 textarea { @apply min-h-[140px] resize-y; }
+.wpcf7 :is(input, select, textarea).wpcf7-not-valid { @apply border-[#ff8a7a]; }
+.wpcf7 .wpcf7-not-valid-tip { @apply mt-1.5 text-xs text-[#ff8a7a]; }
+.wpcf7 .ag-cf7-submit {
+  @apply mt-6 h-12 w-full cursor-pointer disabled:pointer-events-none disabled:opacity-60;
+  background-image: linear-gradient(90deg, #FFC93A 0%, #F6B83A 55%, #DA9328 100%);
+}
+.wpcf7 .wpcf7-spinner { @apply mx-auto mt-3 hidden bg-gold/70; }
+.wpcf7 form.submitting .wpcf7-spinner { @apply block; }
+/* Inline one-field forms (Subscribe Form): email field + button on one row from sm up. */
+.wpcf7 .ag-cf7-inline { @apply flex flex-col gap-3 sm:flex-row; }
+.wpcf7 .ag-cf7-inline .wpcf7-form-control-wrap { @apply flex-1; }
+.wpcf7 .ag-cf7-inline :is(input, select, textarea).wpcf7-validates-as-required { @apply h-12 border-gold/50; }
+.wpcf7 .ag-cf7-subscribe { @apply h-12 shrink-0 cursor-pointer px-10 disabled:pointer-events-none disabled:opacity-60 sm:text-[13px]; }
+/* CF7 puts its spinner beside the button, which would shove it sideways; the dimmed button already shows progress. */
+.wpcf7 .ag-cf7-inline .wpcf7-spinner { display: none !important; }
+.wpcf7 form:has(.ag-cf7-inline) .wpcf7-response-output { @apply text-center; }
+/* One field, so the response box below already says what's wrong; keep the tip for screen readers only. */
+.wpcf7 .ag-cf7-inline .wpcf7-not-valid-tip { @apply sr-only; }
+
+.wpcf7 form .wpcf7-response-output { @apply mx-0 mb-0 mt-5 border px-4 py-3 text-sm leading-relaxed text-cream; }
+.wpcf7 form.sent .wpcf7-response-output { @apply border-gold/40 bg-gold/10; }
+.wpcf7 form:is(.invalid, .unaccepted, .payment-required, .failed, .aborted, .spam) .wpcf7-response-output { @apply border-[#ff8a7a]/50 bg-[#ff8a7a]/10; }
+
+/*
  * Logged-in users: WordPress pushes the page down by the admin bar's height,
  * so the fixed header and mobile drawer must sit below the bar too — otherwise
  * the bar hides the header's top and leaves a gap above the first section.

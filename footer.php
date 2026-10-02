@@ -17,7 +17,7 @@ $socials = array_filter([
 </main>
 
 <?php // Phones (below sm): every column stacks and centres; from sm up the columns sit left-aligned side by side. ?>
-<footer class="bg-ink-900 pt-16 lg:pt-20">
+<footer class="border-t border-gold/15 bg-ink-900 pt-16 lg:pt-20">
     <div class="mx-auto grid max-w-[1000px] grid-cols-1 gap-12 px-5 max-sm:text-center sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.15fr_1fr_1fr] lg:px-0">
         <div class="max-sm:flex max-sm:flex-col max-sm:items-center sm:col-span-2 lg:col-span-1">
             <img src="<?php echo esc_url(awards_gallery_logo_url()); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" class="h-16 w-auto lg:h-[86px]" loading="lazy">

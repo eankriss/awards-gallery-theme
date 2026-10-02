@@ -147,7 +147,7 @@ $lead_img_attrs = ['loading' => false, 'fetchpriority' => 'high', 'decoding' => 
               'next_text' => '→',
           ]);
       ?>
-        <nav class="mt-12 flex flex-wrap justify-center gap-2 text-sm [&_.current]:border-gold [&_.current]:bg-gold [&_.current]:text-ink [&_a:hover]:border-gold [&_a:hover]:text-gold [&>*]:flex [&>*]:h-10 [&>*]:min-w-10 [&>*]:items-center [&>*]:justify-center [&>*]:border [&>*]:border-gold/40 [&>*]:px-3" aria-label="<?php esc_attr_e('Posts pagination', 'awards-gallery-theme'); ?>">
+        <nav class="mt-12 flex flex-wrap justify-center gap-2 text-sm [&_.current]:border-gold [&_.current]:bg-gold [&_.current]:text-ink [&_a:hover]:border-gold [&_a:hover]:text-gold *:flex *:h-10 *:min-w-10 *:items-center *:justify-center *:border *:border-gold/40 *:px-3" aria-label="<?php esc_attr_e('Posts pagination', 'awards-gallery-theme'); ?>">
           <?php echo implode('', $links); // phpcs:ignore — core-generated markup. ?>
         </nav>
       <?php endif; ?>

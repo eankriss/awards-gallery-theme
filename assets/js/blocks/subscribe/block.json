@@ -1,0 +1,37 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/subscribe",
+  "title": "Awards Gallery Subscribe",
+  "category": "design",
+  "icon": "email-alt",
+  "description": "\"Stay updated\" newsletter section: eyebrow, heading, short text and an inline email form (a Contact Form 7 shortcode).",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": "Stay Updated"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Get Tips Straight"
+    },
+    "headingGold": {
+      "type": "string",
+      "default": "to Your Inbox"
+    },
+    "text": {
+      "type": "string",
+      "default": "Occasional guides on choosing awards, placing orders, and honoring your people well. No spam."
+    },
+    "shortcode": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}
