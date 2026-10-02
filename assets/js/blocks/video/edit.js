@@ -31,11 +31,38 @@ export default function Edit({ attributes, setAttributes }) {
         </PanelBody>
         <PanelBody title={__('Playback', 'awards-gallery-theme')} initialOpen={false}>
           <ToggleControl
-            label={__('Autoplay (muted, looping)', 'awards-gallery-theme')}
-            checked={attributes.autoplay}
-            onChange={set('autoplay')}
+            label={__('Click to play (poster + play button)', 'awards-gallery-theme')}
+            help={__('Shows the poster image with a play button. The video only loads when clicked, then plays with sound. Without a poster, YouTube links use their own thumbnail.', 'awards-gallery-theme')}
+            checked={attributes.playOverlay}
+            onChange={set('playOverlay')}
             __nextHasNoMarginBottom
           />
+          {!attributes.playOverlay ? (
+            <ToggleControl
+              label={__('Autoplay (muted, looping)', 'awards-gallery-theme')}
+              checked={attributes.autoplay}
+              onChange={set('autoplay')}
+              __nextHasNoMarginBottom
+            />
+          ) : null}
+          {!attributes.playOverlay && attributes.autoplay ? (
+            <ToggleControl
+              label={__('Show sound on/off button', 'awards-gallery-theme')}
+              help={__('Browsers only allow muted autoplay. This button lets visitors turn the sound on.', 'awards-gallery-theme')}
+              checked={attributes.soundToggle}
+              onChange={set('soundToggle')}
+              __nextHasNoMarginBottom
+            />
+          ) : null}
+          {!attributes.playOverlay && attributes.autoplay && attributes.soundToggle ? (
+            <ToggleControl
+              label={__('Try to start with sound (MP4 only)', 'awards-gallery-theme')}
+              help={__('Plays with sound when the browser allows it (mostly returning Chrome visitors). Everyone else gets muted autoplay with the sound button. Has no effect on YouTube / Vimeo links.', 'awards-gallery-theme')}
+              checked={attributes.trySound}
+              onChange={set('trySound')}
+              __nextHasNoMarginBottom
+            />
+          ) : null}
           <ToggleControl
             label={__('Show player controls', 'awards-gallery-theme')}
             checked={attributes.controls}

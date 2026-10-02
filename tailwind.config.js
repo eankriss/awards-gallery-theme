@@ -31,12 +31,14 @@ module.exports = {
       keyframes: {
         rise: { "0%": { opacity: 0, transform: "translateY(24px)" }, "100%": { opacity: 1, transform: "none" } },
         marquee: { "0%": { transform: "translateX(0)" }, "100%": { transform: "translateX(-50%)" } },
-        glow: { "0%,100%": { opacity: 0.55 }, "50%": { opacity: 0.8 } }
+        glow: { "0%,100%": { opacity: 0.55 }, "50%": { opacity: 0.8 } },
+        "sound-hint": { "0%": { opacity: 0.8, transform: "scale(1)" }, "100%": { opacity: 0, transform: "scale(1.35)" } }
       },
       animation: {
         rise: "rise .9s cubic-bezier(.2,.7,.2,1) both",
         marquee: "marquee 40s linear infinite",
-        glow: "glow 6s ease-in-out infinite"
+        glow: "glow 6s ease-in-out infinite",
+        "sound-hint": "sound-hint 1.6s cubic-bezier(0,0,.2,1) 1s 3 both"
       }
     }
   },

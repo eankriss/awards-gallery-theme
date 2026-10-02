@@ -31,11 +31,23 @@
         "url": ""
       }
     },
+    "playOverlay": {
+      "type": "boolean",
+      "default": false
+    },
     "autoplay": {
       "type": "boolean",
       "default": true
     },
     "controls": {
+      "type": "boolean",
+      "default": false
+    },
+    "soundToggle": {
+      "type": "boolean",
+      "default": true
+    },
+    "trySound": {
       "type": "boolean",
       "default": false
     },
