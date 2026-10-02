@@ -37,7 +37,9 @@ function awards_gallery_menu_links($location, $fallback = [])
                 'title'    => $item->title,
                 'url'      => $item->url,
                 'target'   => $item->target,
-                'active'   => in_array('current-menu-item', $classes, true),
+                // On a blog post, the menu item pointing at the blog listing is the current section.
+                'active'   => in_array('current-menu-item', $classes, true)
+                    || (is_singular('post') && untrailingslashit($item->url) === untrailingslashit(awards_gallery_blog_url())),
                 'ancestor' => (bool) array_intersect(['current-menu-ancestor', 'current-menu-parent'], $classes),
                 'children' => [],
                 'parent'   => (int) $item->menu_item_parent,

@@ -48,13 +48,26 @@ export default function Edit({ attributes, setAttributes }) {
             onChange={set('showFeatured')}
             __nextHasNoMarginBottom
           />
-          <TextControl
-            label={__('Featured category slug', 'awards-gallery-theme')}
-            help={__('The newest post in this category is shown large on top. Only applies to post types that use categories.', 'awards-gallery-theme')}
-            value={attributes.featuredCategory}
-            onChange={set('featuredCategory')}
+          <RangeControl
+            label={__('Number of featured posts', 'awards-gallery-theme')}
+            help={__('Each featured post is shown as a wide card on top. Extra featured posts appear in the grid below.', 'awards-gallery-theme')}
+            value={attributes.featuredCount}
+            onChange={set('featuredCount')}
+            min={1}
+            max={3}
           />
-          <TextControl label={__('Featured badge', 'awards-gallery-theme')} value={attributes.featuredLabel} onChange={set('featuredLabel')} />
+          <TextControl
+            label={__('Featured tag slug', 'awards-gallery-theme')}
+            help={__('The newest posts with this tag are shown on top. Only applies to post types that use tags.', 'awards-gallery-theme')}
+            value={attributes.featuredTag}
+            onChange={set('featuredTag')}
+          />
+          <TextControl
+            label={__('Featured badge', 'awards-gallery-theme')}
+            help={__("Leave empty to use the tag's name.", 'awards-gallery-theme')}
+            value={attributes.featuredLabel}
+            onChange={set('featuredLabel')}
+          />
           <TextControl label={__('Featured link text', 'awards-gallery-theme')} value={attributes.featuredLinkText} onChange={set('featuredLinkText')} />
         </PanelBody>
         <PanelBody title={__('Text', 'awards-gallery-theme')} initialOpen={false}>

@@ -98,6 +98,32 @@ p.wp-block-paragraph { @apply mb-5 leading-relaxed; }
 p.wp-block-paragraph a { @apply text-gold underline underline-offset-4; }
 
 /*
+ * Single blog post body (single-post.php). Comes after the core block rules
+ * above so these win: smaller article text and uppercase section headings with
+ * a gold diamond, as in the Single Article design.
+ */
+.article-content { @apply text-[15px] leading-relaxed text-cream/85; }
+.article-content > * + * { @apply mt-5; }
+.article-content p { @apply mb-0; }
+.article-content h2,
+.article-content h3 { @apply mb-0 mt-12 flex items-baseline gap-4 font-normal uppercase leading-snug text-cream; }
+.article-content h2 { @apply text-xl lg:text-[22px]; }
+.article-content :is(h2, h3) :is(strong, b) { font-weight: inherit; }
+.article-content h3 { @apply text-lg; }
+.article-content h2::before,
+.article-content h3::before {
+  content: "◆";
+  @apply shrink-0 text-[0.6em] text-gold;
+}
+.article-content :is(h2, h3) + * { @apply mt-5; }
+.article-content > :first-child { @apply mt-0; }
+.article-content img { @apply h-auto max-w-full; }
+.article-content .wp-block-image,
+.article-content figure { @apply my-10; }
+.article-content figcaption { @apply mt-3 text-center text-sm text-cream/60; }
+.article-content a:not([class]) { @apply text-gold underline underline-offset-4; }
+
+/*
  * Logged-in users: WordPress pushes the page down by the admin bar's height,
  * so the fixed header and mobile drawer must sit below the bar too — otherwise
  * the bar hides the header's top and leaves a gap above the first section.
