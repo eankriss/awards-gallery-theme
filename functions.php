@@ -102,6 +102,16 @@ function awards_gallery_enqueue_assets()
 }
 add_action('wp_enqueue_scripts', 'awards_gallery_enqueue_assets');
 
+// Single Product page template: thumbnail → main image switching.
+function awards_gallery_enqueue_product_gallery()
+{
+    $file = get_theme_file_path('/assets/js/product-gallery.js');
+    if (is_page_template('page-templates/single-product.php') && file_exists($file)) {
+        wp_enqueue_script('awards-gallery-product', get_theme_file_uri('/assets/js/product-gallery.js'), [], filemtime($file), true);
+    }
+}
+add_action('wp_enqueue_scripts', 'awards_gallery_enqueue_product_gallery');
+
 function awards_gallery_preconnect_fonts()
 {
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";

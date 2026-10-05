@@ -99,28 +99,66 @@ p.wp-block-paragraph a { @apply text-gold underline underline-offset-4; }
 
 /*
  * Single blog post body (single-post.php). Comes after the core block rules
- * above so these win: smaller article text and uppercase section headings with
- * a gold diamond, as in the Single Article design.
+ * above so these win: smaller article text and uppercase section headings,
+ * as in the Single Article design.
  */
 .article-content { @apply text-[15px] leading-relaxed text-cream/85; }
 .article-content > * + * { @apply mt-5; }
 .article-content p { @apply mb-0; }
 .article-content h2,
-.article-content h3 { @apply mb-0 mt-12 flex items-baseline gap-4 font-normal uppercase leading-snug text-cream; }
+.article-content h3 { @apply mb-0 mt-12 font-normal uppercase leading-snug text-cream; }
 .article-content h2 { @apply text-xl lg:text-[22px]; }
 .article-content :is(h2, h3) :is(strong, b) { font-weight: inherit; }
 .article-content h3 { @apply text-lg; }
-.article-content h2::before,
-.article-content h3::before {
-  content: "◆";
-  @apply shrink-0 text-[0.6em] text-gold;
-}
 .article-content :is(h2, h3) + * { @apply mt-5; }
 .article-content > :first-child { @apply mt-0; }
+/*
+ * Article images: whatever size was uploaded, the template shows every image in
+ * the same frame: the full text column at 16:9, cropped to the centre (cover),
+ * with rounded corners and a thin border. !important overrides any width, height
+ * or aspect ratio set on the image block in the editor, so all images match.
+ * Add the class "no-crop" to an image block (Advanced → Additional CSS class)
+ * to show that image whole at its own shape instead (capped at 640px tall).
+ */
 .article-content img { @apply h-auto max-w-full; }
 .article-content .wp-block-image,
 .article-content figure { @apply my-10; }
-.article-content figcaption { @apply mt-3 text-center text-sm text-cream/60; }
+.article-content .wp-block-image img,
+.article-content figure > img,
+.article-content p > img {
+  @apply mx-auto block rounded-lg border border-cream/15 bg-ink-800 object-center;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+}
+.article-content .wp-block-image.no-crop img {
+  width: auto !important;
+  max-height: min(640px, 80vh);
+  aspect-ratio: auto !important;
+  object-fit: contain !important;
+}
+.article-content .wp-block-image > a { @apply block; }
+.article-content figcaption,
+.article-content .wp-element-caption { @apply mx-auto mb-0 mt-3 max-w-xl text-center text-sm text-cream/60; }
+
+/* Left / right aligned images wrap the text beside them from tablet up; stacked on phones. */
+.article-content .wp-block-image.alignleft,
+.article-content .wp-block-image.alignright { @apply float-none mx-0 sm:mb-5 sm:mt-1 sm:w-[45%]; }
+.article-content .wp-block-image.alignleft { @apply sm:float-left sm:mr-8; }
+.article-content .wp-block-image.alignright { @apply sm:float-right sm:ml-8; }
+.article-content .wp-block-image:is(.alignleft, .alignright):not(.no-crop) img { aspect-ratio: 4 / 3 !important; }
+.article-content .wp-block-image:is(.alignleft, .alignright) img { @apply mx-0; }
+.article-content .wp-block-image:is(.alignleft, .alignright) figcaption { @apply text-left; }
+.article-content::after { content: ""; display: table; clear: both; }
+
+/* Galleries: every tile cropped to the same 4:3 shape. */
+.article-content .wp-block-gallery { @apply my-10 gap-3 sm:gap-4; }
+.article-content .wp-block-gallery .wp-block-image { @apply my-0; }
+.article-content .wp-block-gallery .wp-block-image img {
+  aspect-ratio: 4 / 3 !important;
+  height: 100% !important;
+}
 .article-content a:not([class]) { @apply text-gold underline underline-offset-4; }
 
 /*

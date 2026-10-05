@@ -37,9 +37,10 @@ function awards_gallery_menu_links($location, $fallback = [])
                 'title'    => $item->title,
                 'url'      => $item->url,
                 'target'   => $item->target,
-                // On a blog post, the menu item pointing at the blog listing is the current section.
+                // On a blog post / Single Product page, the menu item pointing at the blog / products listing is the current section.
                 'active'   => in_array('current-menu-item', $classes, true)
-                    || (is_singular('post') && untrailingslashit($item->url) === untrailingslashit(awards_gallery_blog_url())),
+                    || (is_singular('post') && untrailingslashit($item->url) === untrailingslashit(awards_gallery_blog_url()))
+                    || (is_page_template('page-templates/single-product.php') && untrailingslashit($item->url) === untrailingslashit(awards_gallery_products_url())),
                 'ancestor' => (bool) array_intersect(['current-menu-ancestor', 'current-menu-parent'], $classes),
                 'children' => [],
                 'parent'   => (int) $item->menu_item_parent,
@@ -77,7 +78,7 @@ function awards_gallery_default_links()
 
     return [
         $link(__('Home', 'awards-gallery-theme'), home_url('/'), is_front_page()),
-        $link(__('Products', 'awards-gallery-theme'), '#'),
+        $link(__('Products', 'awards-gallery-theme'), '#', is_page_template('page-templates/single-product.php')),
         $link(__('Contact us', 'awards-gallery-theme'), '#'),
         $link(__('About us', 'awards-gallery-theme'), '#'),
         $link(__('Blog', 'awards-gallery-theme'), '#'),

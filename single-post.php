@@ -20,7 +20,6 @@ while (have_posts()) :
     $crumbs     = array_filter([
         [__('Home', 'awards-gallery-theme'), home_url('/')],
         [__('Blog', 'awards-gallery-theme'), $blog_url],
-        $category ? [$category->name, get_category_link($category)] : null,
         [get_the_title(), get_permalink()],
     ]);
 
@@ -36,7 +35,12 @@ while (have_posts()) :
 
         <?php // Hero: pads its own top to clear the fixed header (see awards_gallery_starts_with_hero()). ?>
         <header class="relative isolate overflow-hidden pb-14 pt-28 lg:pb-16 lg:pt-32">
-            <img src="<?php echo esc_url(get_theme_file_uri('/assets/img/article-hero-bg.jpg')); ?>" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" fetchpriority="high">
+            <?php // Background: the post's featured image, else the default article banner. ?>
+            <?php if (has_post_thumbnail()) : ?>
+                <?php the_post_thumbnail('full', ['class' => 'absolute inset-0 -z-20 h-full w-full object-cover', 'alt' => '', 'sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>
+            <?php else : ?>
+                <img src="<?php echo esc_url(get_theme_file_uri('/assets/img/article-hero-bg.jpg')); ?>" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" fetchpriority="high">
+            <?php endif; ?>
             <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink/40 via-ink/45 to-ink/80"></div>
 
             <div class="mx-auto max-w-shell px-5 sm:px-8 lg:px-20">
@@ -128,7 +132,7 @@ while (have_posts()) :
         </section>
     <?php endif; ?>
 
-    <?php // Breadcrumb structured data, so search results can show "Home › Blog › Category". ?>
+    <?php // Breadcrumb structured data, so search results can show "Home › Blog › Post". ?>
     <script type="application/ld+json"><?php echo wp_json_encode([
         '@context'        => 'https://schema.org',
         '@type'           => 'BreadcrumbList',

@@ -1,1 +1,95 @@
 /* Block styles — layout is Tailwind utilities in render.php. */
+
+/* Video background: size a 16:9 embed to cover the hero, like object-fit: cover. */
+.ag-hero-media {
+  container-type: size;
+}
+
+.ag-hero-embed {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100cqw, 177.78cqh);
+  height: max(100cqh, 56.25cqw);
+  transform: translate(-50%, -50%);
+}
+
+/* Slideshow background: view.js moves .is-active to the next slide and marks the
+   outgoing one .is-leaving for the length of the transition. The incoming slide sits
+   on top, so the old one stays fully visible underneath until it is covered. */
+.ag-hero-slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.ag-hero-slide.is-active {
+  z-index: 2;
+  opacity: 1;
+  transition:
+    opacity var(--ag-speed, 1.5s) ease,
+    transform var(--ag-speed, 1.5s) ease,
+    filter var(--ag-speed, 1.5s) ease;
+}
+
+.ag-hero-slide.is-leaving {
+  z-index: 1;
+  opacity: 1;
+}
+
+/* Zoom fade: comes in from slightly enlarged. */
+[data-effect="zoom"] .ag-hero-slide:not(.is-active):not(.is-leaving) {
+  transform: scale(1.15);
+}
+
+/* Blur fade: comes in from out of focus. */
+[data-effect="blur"] .ag-hero-slide:not(.is-active):not(.is-leaving) {
+  filter: blur(16px);
+}
+
+/* Cut: swaps instantly. */
+[data-effect="cut"] .ag-hero-slide.is-active {
+  transition: none;
+}
+
+/* Slide: waiting slides sit off to the right (or below); the outgoing one is pushed out the other side. */
+[data-effect^="slide"] .ag-hero-slide {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+[data-effect="slide-up"] .ag-hero-slide {
+  transform: translateY(100%);
+}
+
+[data-effect^="slide"] .ag-hero-slide.is-active {
+  transform: none;
+  transition: transform var(--ag-speed, 1.5s) cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+[data-effect^="slide"] .ag-hero-slide.is-leaving {
+  transform: translateX(-100%);
+  transition: transform var(--ag-speed, 1.5s) cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+[data-effect="slide-up"] .ag-hero-slide.is-leaving {
+  transform: translateY(-100%);
+}
+
+/* Slow zoom runs through the slide's time on screen and its transition out, then resets unseen. */
+.ag-hero-slide img {
+  transform-origin: center;
+}
+
+[data-zoom] .ag-hero-slide.is-zoom img {
+  transform: scale(1.1);
+  transition: transform var(--ag-slide-zoom, 7.5s) linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ag-hero-slide,
+  .ag-hero-slide img {
+    transition: none !important;
+  }
+}
