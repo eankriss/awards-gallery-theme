@@ -5,8 +5,9 @@
   "title": "Awards Gallery Page Hero",
   "category": "design",
   "icon": "cover-image",
-  "description": "Short hero for subpages: eyebrow, two-line script title and intro text over a background image.",
+  "description": "Short hero for subpages: eyebrow, two-line script title and intro text over an image, video or slideshow background.",
   "editorScript": "file:./build/index.js",
+  "viewScript": "file:./view.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
   "supports": {
@@ -39,6 +40,65 @@
     "imageUrl": {
       "type": "string",
       "default": "page-hero-bg.jpg"
+    },
+    "bgType": {
+      "type": "string",
+      "enum": [
+        "image",
+        "video",
+        "slideshow"
+      ],
+      "default": "image"
+    },
+    "video": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "poster": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "soundToggle": {
+      "type": "boolean",
+      "default": false
+    },
+    "slides": {
+      "type": "array",
+      "default": []
+    },
+    "slideInterval": {
+      "type": "number",
+      "default": 6
+    },
+    "slideEffect": {
+      "type": "string",
+      "enum": [
+        "fade",
+        "slide",
+        "slide-up",
+        "zoom",
+        "blur",
+        "cut"
+      ],
+      "default": "fade"
+    },
+    "slideSpeed": {
+      "type": "number",
+      "default": 1.5
+    },
+    "slideZoom": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

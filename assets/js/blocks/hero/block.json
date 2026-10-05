@@ -5,8 +5,9 @@
   "title": "Awards Gallery Hero",
   "category": "design",
   "icon": "awards",
-  "description": "Full-height hero with eyebrow, two-part title, intro text and two buttons.",
+  "description": "Full-height hero with eyebrow, two-part title, intro text and two buttons over an image, video or slideshow background.",
   "editorScript": "file:./build/index.js",
+  "viewScript": "file:./view.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
   "supports": {
@@ -59,6 +60,65 @@
     "imageUrl": {
       "type": "string",
       "default": "hero-bg.jpg"
+    },
+    "bgType": {
+      "type": "string",
+      "enum": [
+        "image",
+        "video",
+        "slideshow"
+      ],
+      "default": "image"
+    },
+    "video": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "poster": {
+      "type": "object",
+      "default": {
+        "id": 0,
+        "url": ""
+      }
+    },
+    "soundToggle": {
+      "type": "boolean",
+      "default": false
+    },
+    "slides": {
+      "type": "array",
+      "default": []
+    },
+    "slideInterval": {
+      "type": "number",
+      "default": 6
+    },
+    "slideZoom": {
+      "type": "boolean",
+      "default": true
+    },
+    "slideEffect": {
+      "type": "string",
+      "enum": [
+        "fade",
+        "slide",
+        "slide-up",
+        "zoom",
+        "blur",
+        "cut"
+      ],
+      "default": "fade"
+    },
+    "slideSpeed": {
+      "type": "number",
+      "default": 1.5
     }
   }
 }

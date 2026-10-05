@@ -3,6 +3,7 @@ module.exports = {
     "./*.php",
     "./inc/**/*.php",
     "./template-parts/**/*.php",
+    "./page-templates/**/*.php",
     "./assets/js/**/*.js",
     "./assets/js/**/*.php",
     "./functions.php"

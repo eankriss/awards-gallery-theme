@@ -127,8 +127,8 @@ function awards_gallery_starts_with_hero()
     if (!is_singular()) {
         return false;
     }
-    // Blog posts use single-post.php, which always opens with its own hero.
-    if (is_singular('post')) {
+    // Blog posts (single-post.php) and Single Product pages always open with their own hero.
+    if (is_singular('post') || is_page_template('page-templates/single-product.php')) {
         return true;
     }
 
@@ -154,6 +154,15 @@ function awards_gallery_primary_category($post_id)
         }
     }
     return null;
+}
+
+/**
+ * Products listing URL: the page with the "products" slug, else /products/.
+ */
+function awards_gallery_products_url()
+{
+    $page = get_page_by_path('products');
+    return $page ? get_permalink($page) : home_url('/products/');
 }
 
 /**
