@@ -116,17 +116,22 @@ function awards_gallery_desktop_nav($links)
 {
     foreach ($links as $link) {
         $current = $link['active'] || $link['ancestor'];
-        $classes = 'text-[13px] uppercase tracking-[0.1em] transition-colors hover:text-gold xl:text-[15px] xl:tracking-[0.15em] '
-            . ($current ? 'text-gold underline decoration-1 underline-offset-[10px]' : 'text-cream');
+        $classes = 'group/link text-[13px] uppercase tracking-[0.1em] transition-colors hover:text-gold xl:text-[15px] xl:tracking-[0.15em] '
+            . ($current ? 'text-gold' : 'text-cream');
+        // Underline drawn as a background on an inline <span> (so it skips the chevron and
+        // its padding doesn't shift layout): full width when current, grows from the centre on hover/focus.
+        $label = '<span class="bg-[linear-gradient(currentColor,currentColor)] bg-[position:50%_100%] bg-no-repeat pb-2 transition-[background-size] duration-300 ease-out group-hover/link:bg-[length:100%_1px] group-focus-visible/link:bg-[length:100%_1px] '
+            . ($current ? 'bg-[length:100%_1px]' : 'bg-[length:0%_1px]') . '">'
+            . esc_html($link['title']) . '</span>';
 
         if (!$link['children']) {
-            printf('<a%s class="%s">%s</a>', awards_gallery_link_attrs($link), esc_attr($classes), esc_html($link['title']));
+            printf('<a%s class="%s">%s</a>', awards_gallery_link_attrs($link), esc_attr($classes), $label); // phpcs:ignore -- $label escaped above
             continue;
         }
         ?>
         <div class="group relative flex h-20 items-center transition-[height] duration-300 group-[.is-scrolled]/header:h-16">
             <a<?php echo awards_gallery_link_attrs($link); // phpcs:ignore ?> class="<?php echo esc_attr($classes); ?> inline-flex items-center gap-1.5" aria-haspopup="true">
-                <?php echo esc_html($link['title']); ?>
+                <?php echo $label; // phpcs:ignore -- escaped above ?>
                 <?php echo awards_gallery_chevron('h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180'); // phpcs:ignore ?>
             </a>
             <div class="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 translate-y-2 opacity-0 transition duration-200 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">

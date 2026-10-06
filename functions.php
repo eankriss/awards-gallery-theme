@@ -221,3 +221,14 @@ require_once get_theme_file_path('/inc/homepage.php');
 // Contact Form 7: the form templates use their own <div> layout (styled in main.css),
 // so stop CF7 from wrapping lines in <p>/<br>.
 add_filter('wpcf7_autop_or_not', '__return_false');
+
+// ACF "Related Products": only offer pages using the Single Product template,
+// and never the page being edited.
+add_filter('acf/fields/relationship/query/name=awards_related_products', function ($args, $field, $post_id) {
+    $args['meta_query'] = [[
+        'key'   => '_wp_page_template',
+        'value' => 'page-templates/single-product.php',
+    ]];
+    $args['post__not_in'] = [(int) $post_id];
+    return $args;
+}, 10, 3);
