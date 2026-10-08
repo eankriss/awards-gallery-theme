@@ -117,20 +117,21 @@ $player = ob_get_clean();
   <?php endif; ?>
 
   <?php if ($sound && $player) : ?>
+    <?php // Phones and tablets show the speaker icon only, like the Hero block. ?>
     <div class="pointer-events-none absolute inset-0 z-10 flex flex-col justify-end">
       <div class="sticky bottom-0 flex justify-end p-5 sm:p-8">
         <button
           type="button"
-          class="group pointer-events-auto relative flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-cream/30 bg-ink/70 px-4 text-cream backdrop-blur transition hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold aria-pressed:px-0"
+          class="group pointer-events-auto relative flex h-10 min-w-10 items-center lg:h-11 lg:min-w-11 justify-center gap-2 rounded-full border border-cream/30 bg-ink/70 px-0 text-cream backdrop-blur transition hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold lg:px-4 lg:aria-pressed:px-0"
           aria-pressed="false"
           aria-label="<?php esc_attr_e('Turn sound on', 'awards-gallery-theme'); ?>"
           data-label-on="<?php esc_attr_e('Turn sound off', 'awards-gallery-theme'); ?>"
           data-label-off="<?php esc_attr_e('Turn sound on', 'awards-gallery-theme'); ?>"
           data-sound-toggle>
           <span class="absolute inset-0 rounded-full border-2 border-gold opacity-0 motion-safe:animate-sound-hint group-aria-pressed:hidden" aria-hidden="true"></span>
-          <svg class="h-5 w-5 shrink-0 group-aria-pressed:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
-          <svg class="hidden h-5 w-5 shrink-0 group-aria-pressed:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
-          <span class="whitespace-nowrap text-xs font-medium uppercase tracking-[0.2em] group-aria-pressed:hidden"><?php esc_html_e('Turn sound on', 'awards-gallery-theme'); ?></span>
+          <svg class="h-[18px] w-[18px] shrink-0 lg:h-5 lg:w-5 group-aria-pressed:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+          <svg class="hidden h-[18px] w-[18px] shrink-0 lg:h-5 lg:w-5 group-aria-pressed:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+          <span class="hidden whitespace-nowrap text-xs font-medium uppercase tracking-[0.2em] lg:inline group-aria-pressed:hidden" aria-hidden="true"><?php esc_html_e('Turn sound on', 'awards-gallery-theme'); ?></span>
         </button>
       </div>
     </div>
