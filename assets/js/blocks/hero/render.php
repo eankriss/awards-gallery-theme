@@ -11,7 +11,8 @@ if (!defined('ABSPATH')) {
 
 $bg      = awards_gallery_media_url($attributes);
 $bg_type = $attributes['bgType'] ?? 'image';
-$wrapper = ['class' => 'relative isolate flex min-h-[640px] items-center overflow-hidden pb-16 pt-32 lg:min-h-[900px]'];
+// overflow-clip (not hidden) so the sticky sound button can track the viewport.
+$wrapper = ['class' => 'relative isolate flex min-h-[640px] items-center overflow-clip pb-16 pt-32 lg:min-h-[900px]'];
 
 // Video background: same sources as the Video block (uploaded MP4, or a YouTube / Vimeo / .mp4 link), always muted, looping autoplay.
 $video_src = $video_embed = $poster = '';
@@ -26,6 +27,11 @@ if ($bg_type === 'video') {
     $sound       = $sound && ($video_embed || $video_src);
     if ($sound) {
         $wrapper['data-video-sound'] = $video_embed ? (str_contains($video_embed, 'vimeo') ? 'vimeo' : 'youtube') : 'file';
+    }
+    // Smaller desktops: a fixed 900px height crops a 16:9 video hard at the sides, so the
+    // height follows the video's ratio (56.25vw) up to 1440px, where the design's 900px returns.
+    if ($video_embed || $video_src) {
+        $wrapper['class'] = str_replace('lg:min-h-[900px]', 'lg:min-h-[56.25vw] min-[1440px]:min-h-[900px]', $wrapper['class']);
     }
 }
 
@@ -92,12 +98,13 @@ if (!$secondary_url && awards_gallery_contact('ag_email')) {
       </div>
     <?php endif; ?>
 
+    <?php // Phones: the size follows the screen width (capped at the old 60px / 72px) so longer words still fit on one line. ?>
     <h1 class="mt-10 flex flex-col items-center font-display font-normal leading-none">
       <?php if (!empty($attributes['heading'])) : ?>
-        <span class="animate-rise text-6xl text-cream sm:text-7xl lg:text-[96px]" style="animation-delay:.25s"><?php echo esc_html($attributes['heading']); ?></span>
+        <span class="animate-rise text-[clamp(2.25rem,12vw,3.75rem)] text-cream sm:text-7xl lg:text-[96px]" style="animation-delay:.25s"><?php echo esc_html($attributes['heading']); ?></span>
       <?php endif; ?>
       <?php if (!empty($attributes['headingScript'])) : ?>
-        <span class="animate-rise -mt-2 pb-4 text-7xl text-gold sm:text-8xl lg:-mt-6 lg:text-[150px]" style="animation-delay:.4s"><?php echo esc_html($attributes['headingScript']); ?></span>
+        <span class="animate-rise -mt-2 pb-4 text-[clamp(2.5rem,14vw,4.5rem)] text-gold sm:text-8xl lg:-mt-6 lg:text-[150px]" style="animation-delay:.4s"><?php echo esc_html($attributes['headingScript']); ?></span>
       <?php endif; ?>
     </h1>
 
@@ -122,20 +129,23 @@ if (!$secondary_url && awards_gallery_contact('ag_email')) {
   </div>
 
   <?php if ($sound) : ?>
-    <div class="absolute bottom-5 right-5 z-10 sm:bottom-8 sm:right-8">
-      <button
-        type="button"
-        class="group relative flex h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-cream/30 bg-ink/70 px-4 text-cream backdrop-blur transition hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold aria-pressed:px-0"
-        aria-pressed="false"
-        aria-label="<?php esc_attr_e('Turn sound on', 'awards-gallery-theme'); ?>"
-        data-label-on="<?php esc_attr_e('Turn sound off', 'awards-gallery-theme'); ?>"
-        data-label-off="<?php esc_attr_e('Turn sound on', 'awards-gallery-theme'); ?>"
-        data-sound-toggle>
-        <span class="absolute inset-0 rounded-full border-2 border-gold opacity-0 motion-safe:animate-sound-hint group-aria-pressed:hidden" aria-hidden="true"></span>
-        <svg class="h-5 w-5 shrink-0 group-aria-pressed:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
-        <svg class="hidden h-5 w-5 shrink-0 group-aria-pressed:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
-        <span class="whitespace-nowrap text-xs font-medium uppercase tracking-[0.2em] group-aria-pressed:hidden"><?php esc_html_e('Turn sound on', 'awards-gallery-theme'); ?></span>
-      </button>
+    <?php // Sticky like the Video block's button: stays in the bottom corner of the screen while the hero is in view. Phones and tablets show the speaker icon only. ?>
+    <div class="pointer-events-none absolute inset-0 z-10 flex flex-col justify-end">
+      <div class="sticky bottom-0 flex justify-end px-4 pb-3 sm:p-8">
+        <button
+          type="button"
+          class="group pointer-events-auto relative flex h-10 min-w-10 items-center lg:h-11 lg:min-w-11 justify-center gap-2 rounded-full border border-cream/30 bg-ink/70 px-0 text-cream backdrop-blur transition hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold lg:px-4 lg:aria-pressed:px-0"
+          aria-pressed="false"
+          aria-label="<?php esc_attr_e('Turn sound on', 'awards-gallery-theme'); ?>"
+          data-label-on="<?php esc_attr_e('Turn sound off', 'awards-gallery-theme'); ?>"
+          data-label-off="<?php esc_attr_e('Turn sound on', 'awards-gallery-theme'); ?>"
+          data-sound-toggle>
+          <span class="absolute inset-0 rounded-full border-2 border-gold opacity-0 motion-safe:animate-sound-hint group-aria-pressed:hidden" aria-hidden="true"></span>
+          <svg class="h-[18px] w-[18px] shrink-0 lg:h-5 lg:w-5 group-aria-pressed:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+          <svg class="hidden h-[18px] w-[18px] shrink-0 lg:h-5 lg:w-5 group-aria-pressed:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+          <span class="hidden whitespace-nowrap text-xs font-medium uppercase tracking-[0.2em] lg:inline group-aria-pressed:hidden" aria-hidden="true"><?php esc_html_e('Turn sound on', 'awards-gallery-theme'); ?></span>
+        </button>
+      </div>
     </div>
   <?php endif; ?>
 </section>

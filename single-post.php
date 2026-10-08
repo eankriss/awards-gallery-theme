@@ -17,6 +17,13 @@ while (have_posts()) :
     $category   = awards_gallery_primary_category($post_id);
     $blog_url   = awards_gallery_blog_url();
     $quote_url  = home_url('/contact-us/');
+    // Hero crop: the focal point set in the editor's "Hero Banner" panel, else the older
+    // Top/Center/Bottom setting some posts still carry, else the centre.
+    $focal      = get_post_meta($post_id, 'awards_post_hero_focal', true);
+    $legacy     = ['top' => '50% 0%', 'center' => '50% 50%', 'bottom' => '50% 100%'];
+    $hero_pos   = is_array($focal) && isset($focal['x'], $focal['y'])
+        ? sprintf('%s%% %s%%', round($focal['x'] * 100, 1), round($focal['y'] * 100, 1))
+        : ($legacy[get_post_meta($post_id, 'awards_post_hero_position', true)] ?? '50% 50%');
     $crumbs     = array_filter([
         [__('Home', 'awards-gallery-theme'), home_url('/')],
         [__('Blog', 'awards-gallery-theme'), $blog_url],
@@ -34,14 +41,16 @@ while (have_posts()) :
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
         <?php // Hero: pads its own top to clear the fixed header (see awards_gallery_starts_with_hero()). ?>
-        <header class="relative isolate overflow-hidden pb-14 pt-28 lg:pb-16 lg:pt-32">
+        <header class="relative isolate overflow-hidden bg-black pb-14 pt-28 lg:pb-16 lg:pt-32">
             <?php // Background: the post's featured image, else the default article banner. ?>
             <?php if (has_post_thumbnail()) : ?>
-                <?php the_post_thumbnail('full', ['class' => 'absolute inset-0 -z-20 h-full w-full object-cover', 'alt' => '', 'sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>
+                <?php the_post_thumbnail('full', ['class' => 'absolute inset-0 -z-20 h-full w-full object-cover opacity-80', 'style' => 'object-position:' . $hero_pos, 'alt' => '', 'sizes' => '100vw', 'loading' => 'eager', 'fetchpriority' => 'high']); ?>
             <?php else : ?>
-                <img src="<?php echo esc_url(get_theme_file_uri('/assets/img/article-hero-bg.jpg')); ?>" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover" fetchpriority="high">
+                <img src="<?php echo esc_url(get_theme_file_uri('/assets/img/article-hero-bg.jpg')); ?>" alt="" class="absolute inset-0 -z-20 h-full w-full object-cover opacity-80" style="object-position:<?php echo esc_attr($hero_pos); ?>" fetchpriority="high">
             <?php endif; ?>
-            <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink/40 via-ink/45 to-ink/80"></div>
+            <?php // Overlay (Figma "Overlay+Blur"): image at 80% on black, a dark shade behind the text side, and a fade into the body. ?>
+            <div class="absolute inset-0 -z-10 bg-gradient-to-r from-black/75 via-black/45 to-black/10"></div>
+            <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 via-transparent to-ink/80"></div>
 
             <div class="mx-auto max-w-shell px-5 sm:px-8 lg:px-20">
                 <nav aria-label="<?php esc_attr_e('Breadcrumb', 'awards-gallery-theme'); ?>">

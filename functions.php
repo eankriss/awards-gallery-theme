@@ -26,6 +26,40 @@ add_filter('acf/settings/dir', function ($dir) {
     return get_stylesheet_directory_uri() . '/acf/';
 });
 
+// Blog posts: the hero banner's focal point — the spot of the featured image kept in view
+// when it crops. Set with the "Hero Banner" panel in the editor (assets/js/editor/post-hero-focal.js).
+add_action('init', function () {
+    register_post_meta('post', 'awards_post_hero_focal', [
+        'type'          => 'object',
+        'single'        => true,
+        'show_in_rest'  => [
+            'schema' => [
+                'type'       => 'object',
+                'properties' => [
+                    'x' => ['type' => 'number', 'minimum' => 0, 'maximum' => 1],
+                    'y' => ['type' => 'number', 'minimum' => 0, 'maximum' => 1],
+                ],
+                'additionalProperties' => false,
+            ],
+        ],
+        'auth_callback' => fn($allowed, $key, $post_id) => current_user_can('edit_post', $post_id),
+    ]);
+});
+
+add_action('enqueue_block_editor_assets', function () {
+    $file = get_theme_file_path('/assets/js/editor/post-hero-focal.js');
+    if (get_current_screen()?->post_type !== 'post' || !file_exists($file)) {
+        return;
+    }
+    wp_enqueue_script(
+        'awards-gallery-post-hero-focal',
+        get_theme_file_uri('/assets/js/editor/post-hero-focal.js'),
+        ['wp-plugins', 'wp-editor', 'wp-element', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
+        filemtime($file),
+        true
+    );
+});
+
 /* ============================================================
    Theme support
    ============================================================ */

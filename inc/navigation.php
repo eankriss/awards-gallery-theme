@@ -119,8 +119,8 @@ function awards_gallery_desktop_nav($links)
         $classes = 'group/link text-[13px] uppercase tracking-[0.1em] transition-colors hover:text-gold xl:text-[15px] xl:tracking-[0.15em] '
             . ($current ? 'text-gold' : 'text-cream');
         // Underline drawn as a background on an inline <span> (so it skips the chevron and
-        // its padding doesn't shift layout): full width when current, grows from the centre on hover/focus.
-        $label = '<span class="bg-[linear-gradient(currentColor,currentColor)] bg-[position:50%_100%] bg-no-repeat pb-2 transition-[background-size] duration-300 ease-out group-hover/link:bg-[length:100%_1px] group-focus-visible/link:bg-[length:100%_1px] '
+        // its padding doesn't shift layout): full width when current, wipes in from the left on hover/focus and back out to the left.
+        $label = '<span class="bg-[linear-gradient(currentColor,currentColor)] bg-[position:0%_100%] bg-no-repeat pb-2 transition-[background-size] duration-300 ease-[ease] group-hover/link:bg-[length:100%_1px] group-focus-visible/link:bg-[length:100%_1px] '
             . ($current ? 'bg-[length:100%_1px]' : 'bg-[length:0%_1px]') . '">'
             . esc_html($link['title']) . '</span>';
 
