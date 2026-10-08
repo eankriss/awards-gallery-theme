@@ -11,7 +11,7 @@ $email        = awards_gallery_contact('ag_email');
 $socials = array_filter([
     'Facebook'  => [awards_gallery_contact('ag_facebook'), '<path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2l.5-3H14V8.5a.5.5 0 0 1 .5-.5z"/>'],
     'Instagram' => [awards_gallery_contact('ag_instagram'), '<rect x="5" y="5" width="14" height="14" rx="4"/><circle cx="12" cy="12" r="3.2"/><circle cx="16.3" cy="7.7" r=".6" fill="currentColor"/>'],
-    'X'         => [awards_gallery_contact('ag_twitter'), '<path d="M20 7.5c-.6.3-1.2.4-1.8.5.7-.4 1.1-1 1.4-1.7-.6.4-1.3.6-2 .8a3.1 3.1 0 0 0-5.3 2.8A8.8 8.8 0 0 1 5.8 6.6a3.1 3.1 0 0 0 1 4.1c-.5 0-1-.2-1.4-.4 0 1.5 1.1 2.8 2.5 3a3 3 0 0 1-1.4.1 3.1 3.1 0 0 0 2.9 2.1A6.2 6.2 0 0 1 5 16.8 8.8 8.8 0 0 0 18.6 9.4V9c.6-.4 1-.9 1.4-1.5z"/>'],
+    'X'         => [awards_gallery_contact('ag_twitter'), '<path d="M5.5 5.5h3.6l9.4 13h-3.6z" stroke-linejoin="round"/><path d="M18.3 5.5l-5.5 6.1M11.2 13.4l-5.5 5.1" stroke-linecap="round"/>'],
 ], fn($social) => $social[0] !== '');
 ?>
 </main>

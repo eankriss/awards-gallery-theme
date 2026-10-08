@@ -45,64 +45,13 @@
       "type": "array",
       "default": [
         {
-          "kicker": "Lightweight Brilliance",
-          "title": "Acrylic Award",
+          "kicker": "",
+          "title": "",
           "url": "",
           "image": {
             "id": 0,
             "url": ""
-          },
-          "imageUrl": "award-acrylic.jpg"
-        },
-        {
-          "kicker": "Enduring Clarity",
-          "title": "Crystal Award",
-          "url": "",
-          "image": {
-            "id": 0,
-            "url": ""
-          },
-          "imageUrl": "award-crystal.jpg"
-        },
-        {
-          "kicker": "Timeless Elegance",
-          "title": "Glass Award",
-          "url": "",
-          "image": {
-            "id": 0,
-            "url": ""
-          },
-          "imageUrl": "award-glass.jpg"
-        },
-        {
-          "kicker": "Infinite Imagination",
-          "title": "Resin Award",
-          "url": "",
-          "image": {
-            "id": 0,
-            "url": ""
-          },
-          "imageUrl": "award-resin.jpg"
-        },
-        {
-          "kicker": "Premium Composite",
-          "title": "Synthetic Award",
-          "url": "",
-          "image": {
-            "id": 0,
-            "url": ""
-          },
-          "imageUrl": "award-synthetic.jpg"
-        },
-        {
-          "kicker": "Natural Authority",
-          "title": "Wood Award",
-          "url": "",
-          "image": {
-            "id": 0,
-            "url": ""
-          },
-          "imageUrl": "award-wood.jpg"
+          }
         }
       ]
     }

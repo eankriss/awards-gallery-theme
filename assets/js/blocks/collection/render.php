@@ -29,7 +29,7 @@ $wrapper = ['class' => 'bg-noise bg-ink bg-ink-sheen py-20 lg:py-28'];
 
     <div class="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
       <?php foreach (($attributes['items'] ?? []) as $i => $item) :
-          $img   = awards_gallery_media_url($item);
+          $img   = $item['image']['url'] ?? '';
           $title = $item['title'] ?? '';
           $url   = trim($item['url'] ?? '');
           // No link → a non-clickable card (a <div>); the hover zoom/lift still plays.
@@ -39,7 +39,7 @@ $wrapper = ['class' => 'bg-noise bg-ink bg-ink-sheen py-20 lg:py-28'];
           <?php if ($img) : ?>
             <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" class="aspect-[418/540] w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy">
           <?php else : ?>
-            <div class="aspect-[418/540] w-full bg-ink-800"></div>
+            <?php echo awards_gallery_card_placeholder('aspect-[418/540]'); // phpcs:ignore -- escaped in helper ?>
           <?php endif; ?>
           <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent"></div>
           <div class="absolute inset-x-0 bottom-0 px-6 pb-8 transition-transform duration-500 group-hover:-translate-y-1.5">

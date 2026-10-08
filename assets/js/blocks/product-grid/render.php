@@ -20,7 +20,7 @@ $link_text = $attributes['linkText'] ?? '';
     ?>
     <div class="grid grid-cols-1 pl-px pt-px sm:grid-cols-2 lg:grid-cols-3">
       <?php foreach (($attributes['items'] ?? []) as $i => $item) :
-          $img   = awards_gallery_media_url($item);
+          $img   = $item['image']['url'] ?? '';
           $title = $item['title'] ?? '';
           $url   = trim($item['url'] ?? '');
           // No link → a non-clickable card (a <div>); the image zoom still plays.
@@ -31,7 +31,7 @@ $link_text = $attributes['linkText'] ?? '';
             <?php if ($img) : ?>
               <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" class="aspect-[418/380] w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy">
             <?php else : ?>
-              <div class="aspect-[418/380] w-full bg-ink-800"></div>
+              <?php echo awards_gallery_card_placeholder('aspect-[418/380]'); // phpcs:ignore -- escaped in helper ?>
             <?php endif; ?>
           </div>
           <div class="flex flex-1 flex-col px-6 pb-8 pt-7 lg:px-7">

@@ -51,6 +51,18 @@ function awards_gallery_logo_url()
 }
 
 /**
+ * Empty-image card placeholder: the site icon centred on a dark panel.
+ * Falls back to the logo when no Site Icon is set.
+ */
+function awards_gallery_card_placeholder($aspect_class)
+{
+    $icon = get_site_icon_url(192) ?: awards_gallery_logo_url();
+    return '<div class="flex ' . esc_attr($aspect_class) . ' w-full items-center justify-center bg-ink-800">'
+        . '<img src="' . esc_url($icon) . '" alt="" class="h-16 w-16 object-contain opacity-60" loading="lazy">'
+        . '</div>';
+}
+
+/**
  * Centered section eyebrow with thin gold rules either side.
  */
 function awards_gallery_eyebrow($text, $tone = 'text-gold', $rule = 'via-gold/70')

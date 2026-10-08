@@ -27,7 +27,7 @@ export default function Edit({ attributes, setAttributes }) {
             items={attributes.items}
             onChange={set('items')}
             addLabel={__('Add product', 'awards-gallery-theme')}
-            newItem={{ kicker: '', title: '', url: '', image: { id: 0, url: '' }, imageUrl: '' }}
+            newItem={{ kicker: '', title: '', url: '', image: { id: 0, url: '' } }}
             fields={[
               { name: 'image', label: __('Image', 'awards-gallery-theme'), type: 'media' },
               { name: 'kicker', label: __('Kicker', 'awards-gallery-theme'), type: 'text' },
