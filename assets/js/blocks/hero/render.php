@@ -22,7 +22,7 @@ if ($bg_type === 'video') {
     $link        = trim($attributes['videoUrl'] ?? '');
     $sound       = !empty($attributes['soundToggle']);
     $video_embed = !$file && $link ? awards_gallery_video_embed_url($link, true, false, $sound) : '';
-    $video_src   = $file ?: ($video_embed ? '' : $link);
+    $video_src   = $file ?: ($video_embed ? '' : awards_gallery_video_file_url($link));
     $poster      = $attributes['poster']['url'] ?? '';
     $sound       = $sound && ($video_embed || $video_src);
     if ($sound) {

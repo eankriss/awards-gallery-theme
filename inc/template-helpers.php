@@ -79,6 +79,27 @@ function awards_gallery_eyebrow($text, $tone = 'text-gold', $rule = 'via-gold/70
 }
 
 /**
+ * Full URL for a video file typed as a link or as a path inside the site, so the same
+ * value works on every copy of the site (local, staging, live):
+ *   https://…/clip.mp4                         → as is
+ *   /wp-content/uploads/2026/10/clip.mp4       → this site's address + path
+ *   wp-content/uploads/2026/10/clip.mp4        → same
+ *   2026/10/clip.mp4                           → inside the uploads folder
+ */
+function awards_gallery_video_file_url($path)
+{
+    $path = trim($path);
+    if ($path === '' || preg_match('~^(https?:)?//~i', $path)) {
+        return $path;
+    }
+    $path = ltrim($path, '/');
+    if (str_starts_with($path, 'wp-content/')) {
+        return home_url('/' . $path);
+    }
+    return trailingslashit(wp_get_upload_dir()['baseurl']) . preg_replace('~^uploads/~', '', $path);
+}
+
+/**
  * Embed URL for a YouTube or Vimeo link, or '' for anything else.
  * Autoplaying embeds are muted and looped so browsers allow them to start.
  * With $sound the player accepts postMessage commands so a button can unmute it.
