@@ -218,10 +218,11 @@ while (have_posts()) :
                         $kicker   = $field('awards_products_theme', $product->ID);
                     ?>
                         <a href="<?php echo esc_url(get_permalink($product)); ?>" class="reveal group flex flex-col border border-gold/60 bg-ink-900 transition-colors duration-300 hover:border-gold hover:text-cream" style="--d:<?php echo esc_attr(($i % 3) * 100); ?>ms">
-                            <div class="overflow-hidden">
+                            <?php // The whole product shows (contain, not cover), sitting on black that fades into the card below. ?>
+                            <div class="relative overflow-hidden bg-black">
                                 <?php if ($image_id) : ?>
                                     <?php echo wp_get_attachment_image($image_id, 'medium_large', false, [
-                                        'class'   => 'aspect-[2/1] w-full object-cover transition duration-700 group-hover:scale-105',
+                                        'class'   => 'aspect-[2/1] w-full object-contain transition duration-700 group-hover:scale-105',
                                         'sizes'   => '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
                                         'loading' => 'lazy',
                                         'alt'     => '',
@@ -229,6 +230,7 @@ while (have_posts()) :
                                 <?php else : ?>
                                     <div class="aspect-[2/1] w-full bg-ink-800"></div>
                                 <?php endif; ?>
+                                <div class="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-ink-900 to-transparent" aria-hidden="true"></div>
                             </div>
                             <div class="px-6 pb-7 pt-6">
                                 <?php if ($kicker) : ?>
