@@ -99,7 +99,7 @@ export default function Edit({ attributes, setAttributes }) {
               />
               <TextControl
                 label={__('…or video URL', 'awards-gallery-theme')}
-                help={__('YouTube, Vimeo or a direct .mp4 link. Used when no video is uploaded. Plays muted and looping behind the content.', 'awards-gallery-theme')}
+                help={__('YouTube, Vimeo, a direct .mp4 link, or a file already on the server, e.g. 2026/10/hero.mp4 (inside wp-content/uploads) or /wp-content/uploads/2026/10/hero.mp4. Used when no video is uploaded. Plays muted and looping behind the content.', 'awards-gallery-theme')}
                 value={attributes.videoUrl}
                 onChange={set('videoUrl')}
               />
