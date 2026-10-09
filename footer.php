@@ -8,11 +8,7 @@ $address      = awards_gallery_contact('ag_address');
 $phones       = array_filter([awards_gallery_contact('ag_phone_1'), awards_gallery_contact('ag_phone_2')]);
 $email        = awards_gallery_contact('ag_email');
 
-$socials = array_filter([
-    'Facebook'  => [awards_gallery_contact('ag_facebook'), '<path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2l.5-3H14V8.5a.5.5 0 0 1 .5-.5z"/>'],
-    'Instagram' => [awards_gallery_contact('ag_instagram'), '<rect x="5" y="5" width="14" height="14" rx="4"/><circle cx="12" cy="12" r="3.2"/><circle cx="16.3" cy="7.7" r=".6" fill="currentColor"/>'],
-    'X'         => [awards_gallery_contact('ag_twitter'), '<path d="M5.5 5.5h3.6l9.4 13h-3.6z" stroke-linejoin="round"/><path d="M18.3 5.5l-5.5 6.1M11.2 13.4l-5.5 5.1" stroke-linecap="round"/>'],
-], fn($social) => $social[0] !== '');
+$socials      = awards_gallery_social_links();
 ?>
 </main>
 
@@ -24,9 +20,15 @@ $socials = array_filter([
             <p class="mt-8 max-w-[16rem] text-base leading-relaxed text-cream sm:max-w-[26rem] lg:max-w-[17rem] lg:pl-4"><?php echo esc_html(awards_gallery_contact('ag_footer_text')); ?></p>
             <?php if ($socials) : ?>
                 <div class="mt-6 flex gap-3 max-lg:justify-center lg:pl-4">
-                    <?php foreach ($socials as $label => [$url, $icon]) : ?>
-                        <a href="<?php echo esc_url($url); ?>" class="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-cream/80 text-cream transition-colors hover:border-gold hover:text-gold" aria-label="<?php echo esc_attr($label); ?>" target="_blank" rel="noopener">
-                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><?php echo $icon; // phpcs:ignore -- static markup ?></svg>
+                    <?php foreach ($socials as $social) : ?>
+                        <a href="<?php echo esc_url($social['url']); ?>" class="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-cream/80 text-cream transition-colors hover:border-gold hover:text-gold" aria-label="<?php echo esc_attr($social['label']); ?>" target="_blank" rel="noopener">
+                            <?php if ($social['image']) : ?>
+                                <img src="<?php echo esc_url($social['image']); ?>" alt="" class="h-4 w-4 object-contain" loading="lazy">
+                            <?php elseif ($social['svg']) : ?>
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><?php echo $social['svg']; // phpcs:ignore -- static markup ?></svg>
+                            <?php else : ?>
+                                <span class="text-xs uppercase" aria-hidden="true"><?php echo esc_html(mb_substr($social['label'], 0, 1)); ?></span>
+                            <?php endif; ?>
                         </a>
                     <?php endforeach; ?>
                 </div>
