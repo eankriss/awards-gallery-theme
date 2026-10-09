@@ -22,13 +22,7 @@ $socials      = awards_gallery_social_links();
                 <div class="mt-6 flex gap-3 max-lg:justify-center lg:pl-4">
                     <?php foreach ($socials as $social) : ?>
                         <a href="<?php echo esc_url($social['url']); ?>" class="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-cream/80 text-cream transition-colors hover:border-gold hover:text-gold" aria-label="<?php echo esc_attr($social['label']); ?>" target="_blank" rel="noopener">
-                            <?php if ($social['image']) : ?>
-                                <img src="<?php echo esc_url($social['image']); ?>" alt="" class="h-4 w-4 object-contain" loading="lazy">
-                            <?php elseif ($social['svg']) : ?>
-                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><?php echo $social['svg']; // phpcs:ignore -- static markup ?></svg>
-                            <?php else : ?>
-                                <span class="text-xs uppercase" aria-hidden="true"><?php echo esc_html(mb_substr($social['label'], 0, 1)); ?></span>
-                            <?php endif; ?>
+                            <?php echo $social['icon']; // phpcs:ignore -- escaped in awards_gallery_uploaded_icon() ?>
                         </a>
                     <?php endforeach; ?>
                 </div>
@@ -55,13 +49,13 @@ $socials      = awards_gallery_social_links();
             <ul class="mt-6 flex flex-col gap-4 text-base leading-relaxed text-cream">
                 <?php if ($address) : ?>
                     <li class="flex gap-4 max-sm:flex-col max-sm:items-center max-sm:gap-2">
-                        <svg class="h-3.5 w-3.5 shrink-0 text-gold sm:mt-1.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22s7-6.5 7-12.5a7 7 0 1 0-14 0C5 15.5 12 22 12 22zm0-10a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+                        <?php echo awards_gallery_footer_contact_icon('address'); // phpcs:ignore -- escaped in the helper ?>
                         <span><?php echo nl2br(esc_html($address)); ?></span>
                     </li>
                 <?php endif; ?>
                 <?php if ($phones) : ?>
                     <li class="flex gap-4 max-sm:flex-col max-sm:items-center max-sm:gap-2">
-                        <svg class="h-3.5 w-3.5 shrink-0 text-gold sm:mt-1.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>
+                        <?php echo awards_gallery_footer_contact_icon('phone'); // phpcs:ignore -- escaped in the helper ?>
                         <span>
                             <?php foreach (array_values($phones) as $i => $phone) : ?>
                                 <?php echo $i ? '<br>' : ''; ?><a href="<?php echo esc_attr(awards_gallery_tel_href($phone)); ?>"><?php echo esc_html($phone); ?></a>
@@ -71,7 +65,7 @@ $socials      = awards_gallery_social_links();
                 <?php endif; ?>
                 <?php if ($email) : ?>
                     <li class="flex gap-4 max-sm:flex-col max-sm:items-center max-sm:gap-2">
-                        <svg class="h-3.5 w-3.5 shrink-0 text-gold sm:mt-1.5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm9 7.2L4.2 7H4v.9l8 5.3 8-5.3V7h-.2L12 12.2z"/></svg>
+                        <?php echo awards_gallery_footer_contact_icon('email'); // phpcs:ignore -- escaped in the helper ?>
                         <a href="mailto:<?php echo esc_attr($email); ?>" class="break-all"><?php echo esc_html($email); ?></a>
                     </li>
                 <?php endif; ?>
@@ -80,7 +74,7 @@ $socials      = awards_gallery_social_links();
     </div>
 
     <div class="mx-auto mt-6 max-w-shell px-5 pb-5 text-center text-xs text-cream/30 sm:mt-8 sm:px-8 sm:py-6 sm:text-sm lg:mt-16 lg:px-20 lg:py-8 lg:text-left">
-        &copy; <?php echo esc_html(gmdate('Y')); ?> <?php echo esc_html(awards_gallery_contact('ag_copyright')); ?>
+        <?php echo esc_html(awards_gallery_contact('ag_copyright')); ?>
     </div>
 </footer>
 

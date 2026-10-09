@@ -5,7 +5,7 @@
   "title": "Awards Gallery Video",
   "category": "design",
   "icon": "video-alt3",
-  "description": "Full-width video introduction — uploaded MP4 or a YouTube / Vimeo link — with an optional logo overlay.",
+  "description": "Full-width video introduction — uploaded MP4 or a YouTube / Vimeo link — with an optional intro (eyebrow + heading) above and logo overlay.",
   "editorScript": "file:./build/index.js",
   "style": "file:./style.css",
   "render": "file:./render.php",
@@ -13,6 +13,22 @@
     "html": false
   },
   "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "default": ""
+    },
+    "heading": {
+      "type": "string",
+      "default": ""
+    },
+    "headingScript": {
+      "type": "string",
+      "default": ""
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": false
+    },
     "video": {
       "type": "object",
       "default": {

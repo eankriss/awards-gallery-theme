@@ -10,7 +10,23 @@ export default function Edit({ attributes, setAttributes }) {
   return (
     <>
       <InspectorControls>
-        <PanelBody title={__('Video', 'awards-gallery-theme')} initialOpen>
+        <PanelBody title={__('Intro', 'awards-gallery-theme')} initialOpen>
+          <TextControl label={__('Eyebrow', 'awards-gallery-theme')} value={attributes.eyebrow} onChange={set('eyebrow')} />
+          <TextControl label={__('Heading', 'awards-gallery-theme')} value={attributes.heading} onChange={set('heading')} />
+          <TextControl label={__('Heading (gold part)', 'awards-gallery-theme')} value={attributes.headingScript} onChange={set('headingScript')} />
+          {attributes.eyebrow || attributes.heading || attributes.headingScript ? (
+            <ToggleControl
+              label={__('Full-width video', 'awards-gallery-theme')}
+              help={__('Off: the video lines up with the heading, with space around it. On: the video spans the whole screen under the intro.', 'awards-gallery-theme')}
+              checked={attributes.fullWidth}
+              onChange={set('fullWidth')}
+              __nextHasNoMarginBottom
+            />
+          ) : (
+            <p className="components-base-control__help">{__('Leave all three empty for a full-screen video with no intro.', 'awards-gallery-theme')}</p>
+          )}
+        </PanelBody>
+        <PanelBody title={__('Video', 'awards-gallery-theme')} initialOpen={false}>
           <MediaField
             label={__('Upload video (MP4)', 'awards-gallery-theme')}
             allowedTypes={['video']}
