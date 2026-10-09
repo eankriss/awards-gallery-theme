@@ -22,7 +22,7 @@ class Awards_Gallery_Social_Links_Control extends WP_Customize_Control
         $rows  = json_decode((string) $this->value(), true);
         foreach (is_array($rows) ? $rows : [] as $row) {
             if (!empty($row['icon'])) {
-                $icons[$row['icon']] = wp_get_attachment_image_url($row['icon'], 'thumbnail');
+                $icons[$row['icon']] = wp_get_attachment_image_url($row['icon'], 'thumbnail') ?: wp_get_attachment_url($row['icon']);
             }
         }
         $this->json['icons'] = $icons;

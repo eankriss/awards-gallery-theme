@@ -17,6 +17,12 @@ $file     = $attributes['video']['url'] ?? '';
 $link     = trim($attributes['videoUrl'] ?? '');
 $poster   = $attributes['poster']['url'] ?? '';
 $poster_id = (int) ($attributes['poster']['id'] ?? 0);
+$eyebrow  = trim($attributes['eyebrow'] ?? '');
+$heading  = trim($attributes['heading'] ?? '');
+$heading_gold = trim($attributes['headingScript'] ?? '');
+$intro    = $eyebrow || $heading || $heading_gold;
+// With an intro the video sits in the content column unless "Full-width video" is on.
+$contained = $intro && empty($attributes['fullWidth']);
 $mark     = !empty($attributes['showMark']) ? ($attributes['mark']['url'] ?? '') : '';
 $embed    = !$file && $link ? awards_gallery_video_embed_url($link, $autoplay, $controls, $sound, $overlay) : '';
 $src      = $file ?: ($embed ? '' : $link);
@@ -26,7 +32,7 @@ $try_sound = $sound && $src && !empty($attributes['trySound']);
 $custom   = $overlay && $src;
 
 // overflow-clip (not hidden) so the sticky sound button can track the viewport.
-$wrapper = ['class' => 'relative aspect-video overflow-clip bg-black'];
+$wrapper = ['class' => 'relative aspect-video overflow-clip bg-black' . ($contained ? ' rounded-lg lg:rounded-xl' : '')];
 if ($sound) {
     $wrapper['data-video-sound'] = $embed ? (str_contains($embed, 'vimeo') ? 'vimeo' : 'youtube') : 'file';
 }
@@ -92,7 +98,28 @@ if ($embed) : ?>
 <?php endif;
 $player = ob_get_clean();
 ?>
+<?php if ($intro) : ?>
+<?php // With an intro: eyebrow + heading like Behind the Craft / Process on the ink background, the video below. ?>
+<section <?php echo get_block_wrapper_attributes(['class' => 'bg-noise bg-ink bg-ink-sheen pt-20 lg:pt-24' . ($contained ? ' pb-20 lg:pb-24' : '')]); ?>>
+<div class="mx-auto max-w-shell px-5 sm:px-8 lg:px-20">
+  <div class="reveal flex flex-col items-center pb-12 text-center lg:pb-16">
+    <?php echo awards_gallery_eyebrow($eyebrow); // phpcs:ignore ?>
+    <?php if ($heading || $heading_gold) : ?>
+      <h2 class="<?php echo $eyebrow ? 'mt-3 ' : ''; ?>text-4xl font-normal leading-tight sm:text-5xl lg:text-[56px]">
+        <?php echo esc_html($heading); ?>
+        <?php if ($heading_gold) : ?>
+          <span class="text-gold"><?php echo esc_html($heading_gold); ?></span>
+        <?php endif; ?>
+      </h2>
+    <?php endif; ?>
+  </div>
+<?php if (!$contained) : ?>
+</div>
+<?php endif; ?>
+<div<?php foreach ($wrapper as $attr => $value) { echo ' ' . esc_attr($attr) . '="' . esc_attr($value) . '"'; } ?>>
+<?php else : ?>
 <section <?php echo get_block_wrapper_attributes($wrapper); ?>>
+<?php endif; ?>
   <?php if ($overlay) : ?>
     <template data-video-player><?php echo $player; ?></template>
     <button
@@ -140,4 +167,10 @@ $player = ob_get_clean();
   <?php if ($mark) : ?>
     <img src="<?php echo esc_url($mark); ?>" alt="" aria-hidden="true" class="pointer-events-none absolute right-5 top-6 z-20 w-10 sm:right-8 sm:top-10 lg:w-[56px]" loading="lazy">
   <?php endif; ?>
+<?php if ($intro) : ?>
+</div>
+<?php endif; ?>
+<?php if ($contained) : ?>
+</div>
+<?php endif; ?>
 </section>
