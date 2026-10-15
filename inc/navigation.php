@@ -27,6 +27,20 @@ function awards_gallery_menu_links($location, $fallback = [])
     $locations = get_nav_menu_locations();
     $items     = !empty($locations[$location]) ? wp_get_nav_menu_items($locations[$location]) : [];
 
+    // A product detail page is not a taxonomy archive, so WordPress cannot
+    // automatically mark its Products/category menu branch as current.
+    $product_category_urls = [];
+    if (is_singular('product-page')) {
+        foreach ((array) get_the_terms(get_queried_object_id(), 'product-category') as $term) {
+            if (!is_wp_error($term)) {
+                $term_url = get_term_link($term);
+                if (!is_wp_error($term_url)) {
+                    $product_category_urls[] = untrailingslashit($term_url);
+                }
+            }
+        }
+    }
+
     if ($items) {
         _wp_menu_item_classes_by_context($items);
 
@@ -40,7 +54,8 @@ function awards_gallery_menu_links($location, $fallback = [])
                 // On a blog post / Single Product page, the menu item pointing at the blog / products listing is the current section.
                 'active'   => in_array('current-menu-item', $classes, true)
                     || (is_singular('post') && untrailingslashit($item->url) === untrailingslashit(awards_gallery_blog_url()))
-                    || (is_page_template('page-templates/single-product.php') && untrailingslashit($item->url) === untrailingslashit(awards_gallery_products_url())),
+                    || (is_singular('product-page') && untrailingslashit($item->url) === untrailingslashit(awards_gallery_products_url()))
+                    || in_array(untrailingslashit($item->url), $product_category_urls, true),
                 'ancestor' => (bool) array_intersect(['current-menu-ancestor', 'current-menu-parent'], $classes),
                 'children' => [],
                 'parent'   => (int) $item->menu_item_parent,
@@ -57,6 +72,22 @@ function awards_gallery_menu_links($location, $fallback = [])
             }
         }
         unset($node);
+
+        // Bubble an active category up through Products and any intermediate
+        // menu levels so the desktop and mobile renderers share the same state.
+        $mark_active_parents = function (&$nodes) use (&$mark_active_parents) {
+            $has_active = false;
+            foreach ($nodes as &$node) {
+                $child_active = $node['children'] ? $mark_active_parents($node['children']) : false;
+                if ($child_active) {
+                    $node['ancestor'] = true;
+                }
+                $has_active = $has_active || $node['active'] || $node['ancestor'];
+            }
+            unset($node);
+            return $has_active;
+        };
+        $mark_active_parents($links);
     }
 
     return apply_filters('awards_gallery_menu_links', $links, $location);
@@ -78,7 +109,7 @@ function awards_gallery_default_links()
 
     return [
         $link(__('Home', 'awards-gallery-theme'), home_url('/'), is_front_page()),
-        $link(__('Products', 'awards-gallery-theme'), '#', is_page_template('page-templates/single-product.php')),
+        $link(__('Products', 'awards-gallery-theme'), '#', is_singular('product-page') || is_tax('product-category')),
         $link(__('Contact us', 'awards-gallery-theme'), '#'),
         $link(__('About us', 'awards-gallery-theme'), '#'),
         $link(__('Blog', 'awards-gallery-theme'), '#'),

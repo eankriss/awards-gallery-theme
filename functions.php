@@ -88,7 +88,7 @@ add_action('after_setup_theme', 'awards_gallery_setup');
    ============================================================ */
 function awards_gallery_fonts_url()
 {
-    return 'https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@400&family=Pinyon+Script&family=Rubik:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap';
+    return 'https://fonts.googleapis.com/css2?family=Outfit:wght@400&family=Rubik:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap';
 }
 
 function awards_gallery_enqueue_assets()
@@ -136,15 +136,24 @@ function awards_gallery_enqueue_assets()
 }
 add_action('wp_enqueue_scripts', 'awards_gallery_enqueue_assets');
 
-// Single Product page template: thumbnail → main image switching.
+// Single Product page (CPT "product-page"): thumbnail → main image switching.
 function awards_gallery_enqueue_product_gallery()
 {
     $file = get_theme_file_path('/assets/js/product-gallery.js');
-    if (is_page_template('page-templates/single-product.php') && file_exists($file)) {
+    if (is_singular('product-page') && file_exists($file)) {
         wp_enqueue_script('awards-gallery-product', get_theme_file_uri('/assets/js/product-gallery.js'), [], filemtime($file), true);
     }
 }
 add_action('wp_enqueue_scripts', 'awards_gallery_enqueue_product_gallery');
+
+function awards_gallery_enqueue_product_specification()
+{
+    $file = get_theme_file_path('/assets/js/product-specification.js');
+    if (is_singular('product-page') && file_exists($file)) {
+        wp_enqueue_script('awards-gallery-product-specification', get_theme_file_uri('/assets/js/product-specification.js'), [], filemtime($file), true);
+    }
+}
+add_action('wp_enqueue_scripts', 'awards_gallery_enqueue_product_specification');
 
 function awards_gallery_preconnect_fonts()
 {
@@ -251,18 +260,72 @@ require_once get_theme_file_path('/inc/template-helpers.php');
 require_once get_theme_file_path('/inc/navigation.php');
 require_once get_theme_file_path('/inc/customizer.php');
 require_once get_theme_file_path('/inc/homepage.php');
+require_once get_theme_file_path('/inc/awards-archive.php');
 
 // Contact Form 7: the form templates use their own <div> layout (styled in main.css),
 // so stop CF7 from wrapping lines in <p>/<br>.
 add_filter('wpcf7_autop_or_not', '__return_false');
 
-// ACF "Related Products": only offer pages using the Single Product template,
-// and never the page being edited.
+// Populate the product subcategory Select from the repeater configured on its category.
+add_filter('acf/load_field/name=awards_product_subcategory', function ($field) {
+    $field['choices'] = [
+        '' => __('Select Subcategory', 'awards-gallery-theme'),
+    ];
+    $post_id = is_numeric(get_the_ID()) ? (int) get_the_ID() : 0;
+
+    if (!$post_id || !function_exists('get_field')) {
+        return $field;
+    }
+
+    $terms = get_the_terms($post_id, 'product-category');
+    if (!$terms || is_wp_error($terms)) {
+        return $field;
+    }
+
+    $term_ids = [];
+    foreach ($terms as $term) {
+        $term_ids[] = (int) $term->term_id;
+        $term_ids = array_merge($term_ids, array_map('intval', get_ancestors($term->term_id, 'product-category', 'taxonomy')));
+    }
+
+    foreach (array_unique($term_ids) as $term_id) {
+        // ACF stores repeater rows as indexed term meta. Read the rows directly
+        // so loading this Select field cannot recursively load itself.
+        $row_count = (int) get_term_meta($term_id, 'awards_subcategory', true);
+        for ($row_index = 0; $row_index < $row_count; $row_index++) {
+            $label = trim((string) get_term_meta(
+                $term_id,
+                'awards_subcategory_' . $row_index . '_awards_product_subcategory',
+                true
+            ));
+            if ($label !== '') {
+                $field['choices'][$label] = $label;
+            }
+        }
+    }
+
+    return $field;
+});
+
+// ACF "Related Products": only offer products in the same product category
+// as the product being edited, and never the product itself. Uses the categories saved in
+// the database, so click Update after changing a product's category.
 add_filter('acf/fields/relationship/query/name=awards_related_products', function ($args, $field, $post_id) {
-    $args['meta_query'] = [[
-        'key'   => '_wp_page_template',
-        'value' => 'page-templates/single-product.php',
-    ]];
+    $args['post_type']    = ['product-page'];
     $args['post__not_in'] = [(int) $post_id];
+
+    $term_ids = wp_get_object_terms((int) $post_id, 'product-category', ['fields' => 'ids']);
+
+    if (is_wp_error($term_ids) || !$term_ids) {
+        $args['post__in'] = [0]; // no category set yet → offer nothing
+        return $args;
+    }
+
+    $args['tax_query'] = [[
+        'taxonomy' => 'product-category',
+        'field'    => 'term_id',
+        'terms'    => $term_ids,
+    ]];
+
     return $args;
 }, 10, 3);

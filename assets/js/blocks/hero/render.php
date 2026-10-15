@@ -99,12 +99,12 @@ if (!$secondary_url && awards_gallery_contact('ag_email')) {
     <?php endif; ?>
 
     <?php // Phones: the size follows the screen width (capped at the old 60px / 72px) so longer words still fit on one line. ?>
-    <h1 class="mt-10 flex flex-col items-center font-display font-normal leading-none">
+    <h1 class="mt-10 flex flex-col items-center leading-none">
       <?php if (!empty($attributes['heading'])) : ?>
-        <span class="animate-rise text-[clamp(2.25rem,12vw,3.75rem)] text-cream sm:text-7xl lg:text-[96px]" style="animation-delay:.25s"><?php echo esc_html($attributes['heading']); ?></span>
+        <span class="font-celebrate animate-rise text-[clamp(2.5rem,14vw,4.5rem)] sm:text-8xl lg:text-[150px]" style="animation-delay:.25s"><?php echo esc_html($attributes['heading']); ?></span>
       <?php endif; ?>
       <?php if (!empty($attributes['headingScript'])) : ?>
-        <span class="animate-rise -mt-2 pb-4 text-[clamp(2.5rem,14vw,4.5rem)] text-gold sm:text-8xl lg:-mt-6 lg:text-[150px]" style="animation-delay:.4s"><?php echo esc_html($attributes['headingScript']); ?></span>
+        <span class="font-happiness animate-rise -mt-2 pb-4 text-[clamp(2.25rem,12vw,3.75rem)] sm:text-7xl lg:-mt-6 lg:text-[96px]" style="animation-delay:.4s"><?php echo esc_html($attributes['headingScript']); ?></span>
       <?php endif; ?>
     </h1>
 

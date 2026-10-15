@@ -2,7 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Brand fonts: add the licensed files to assets/fonts using these filenames. */
+@font-face {
+  font-family: "Great Vibes";
+  /* Free Glade-style replacement. */
+  src: url("../fonts/GreatVibes-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quase Display";
+  /* Free replacement for Quase Display Bold: Libre Caslon Text Bold. */
+  src: url("../fonts/LibreCaslonText-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 @layer base {
+  /* Tailwind's .flex utility otherwise overrides the browser's [hidden] rule on product cards. */
+  [data-product-index][hidden] {
+    display: none !important;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -43,6 +67,106 @@
   .btn-dark-outline {
     @apply inline-flex h-14 items-center justify-center border-2 border-gold-dark px-12 text-xs uppercase tracking-[0.3em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-gold-dark hover:text-white sm:text-[15px];
   }
+
+  /* Awards Gallery hero lockup — keep these brand faces separate from the utility font families. */
+  .font-celebrate {
+    font-family: "Great Vibes" !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    color: #f7f1e8 !important;
+  }
+
+  .font-happiness {
+    font-family: "Quase Display", "Quase" !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    color: #f6b83a !important;
+  }
+
+  /* Native selects need explicit colors: some browsers and theme plugins ignore utility backgrounds. */
+  .ag-awards-select {
+    color-scheme: dark;
+    background-color: #121110 !important;
+    color: #f5f0e8 !important;
+  }
+  .ag-awards-select option,
+  .ag-awards-select optgroup {
+    background-color: #121110;
+    color: #f5f0e8;
+  }
+  .ag-awards-select:hover {
+    background-color: #181614 !important;
+  }
+  .ag-awards-select:focus {
+    background-color: #121110 !important;
+  }
+
+  /* Custom select shells: retain native keyboard/mobile behaviour while giving
+   * the archive controls the same restrained, premium feel as the site chrome. */
+  .ag-filter-select {
+    min-height: 3.5rem;
+    border: 1px solid rgba(245, 240, 232, .20) !important;
+    border-radius: .35rem;
+    padding: .95rem 3rem .95rem 1.15rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035), 0 8px 24px rgba(0, 0, 0, .14);
+    font-weight: 500;
+    letter-spacing: .01em;
+  }
+  .ag-filter-select:hover { border-color: rgba(218, 147, 40, .72) !important; }
+  .ag-filter-select:focus {
+    border-color: #da9328 !important;
+    box-shadow: 0 0 0 3px rgba(218, 147, 40, .14), inset 0 1px 0 rgba(255, 255, 255, .035);
+  }
+  .ag-filter-chevron { width: 1rem; height: .65rem; flex: 0 0 auto; color: #da9328; transition: transform .2s ease; }
+  .ag-dropdown-toggle {
+    display: flex; width: 100%; min-height: 3.5rem; align-items: center; justify-content: space-between;
+    gap: 1rem; border: 1px solid rgba(245,240,232,.22); border-radius: .35rem; padding: .95rem 1.25rem;
+    background: #121110; color: #f5f0e8; font-size: .95rem; font-weight: 600; text-align: left;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04); transition: border-color .2s, background .2s, box-shadow .2s;
+  }
+  .ag-dropdown-toggle:hover, .ag-dropdown-toggle[aria-expanded="true"] { border-color: rgba(218,147,40,.75); background: #181614; }
+  .ag-dropdown-toggle[aria-expanded="true"] { box-shadow: 0 0 0 3px rgba(218,147,40,.12); }
+  .ag-dropdown-toggle[aria-expanded="true"] .ag-filter-chevron { transform: rotate(180deg); }
+  .ag-dropdown-menu {
+    position: absolute; z-index: 20; top: calc(100% + .55rem); left: 0; width: 100%; margin: 0; padding: .45rem;
+    list-style: none; border: 1px solid rgba(245,240,232,.16); border-radius: .5rem; background: #121110;
+    box-shadow: 0 18px 40px rgba(0,0,0,.42); backdrop-filter: blur(14px);
+  }
+  .ag-dropdown-option { display: block; width: 100%; border: 0; border-radius: .3rem; padding: .85rem 1rem; background: transparent; color: rgba(245,240,232,.78); font-size: .95rem; text-align: left; transition: background .18s, color .18s; }
+  .ag-dropdown-option:hover, .ag-dropdown-option:focus, .ag-dropdown-option.is-selected { background: #211b15; color: #fff; outline: none; }
+  .ag-dropdown-option.is-selected { color: #f6b83a; }
+  .ag-spec-quantity input[type="number"] {
+    appearance: textfield !important;
+    -webkit-appearance: textfield !important;
+    background: #121110 !important;
+    background-color: #121110 !important;
+    color: #f5f0e8 !important;
+    box-shadow: none !important;
+  }
+  .ag-spec-quantity input[type="number"]::-webkit-inner-spin-button,
+  .ag-spec-quantity input[type="number"]::-webkit-outer-spin-button { appearance: none; -webkit-appearance: none; margin: 0; }
+  .ag-sort-toggle { min-height: 2.75rem; min-width: 12rem; border-radius: .65rem; padding-top: .65rem; padding-bottom: .65rem; }
+  .ag-sort-menu { width: 100%; }
+  .ag-sort-control {
+    border: 1px solid rgba(245, 240, 232, .16);
+    border-radius: .35rem;
+    background: rgba(18, 17, 16, .72);
+    padding: .45rem .5rem .45rem 1rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+  }
+  .ag-sort-control:focus-within { border-color: rgba(218, 147, 40, .58); }
+  @media (max-width: 639px) {
+    .ag-sort-control { width: 100%; }
+    .ag-sort-toggle { flex: 1; min-width: 0; }
+  }
+  @media (min-width: 768px) {
+    .ag-filter-row { display: flex; align-items: flex-start; gap: .75rem; }
+    .ag-filter-row > .ag-filter-field,
+    .ag-filter-row > .ag-theme-filter-form { flex: 1 1 0; min-width: 0; max-width: none; }
+    .ag-filter-row > .ag-theme-filter-form { margin: 0; }
+    .ag-filter-row > .ag-theme-filter-form > .ag-filter-field { width: 100%; max-width: none; margin-top: 1.25rem; }
+  }
+  @media (max-width: 767px) { .ag-filter-row > .ag-theme-filter-form { width: 100%; } }
 
   /*
    * Film-grain overlay matching the Figma "Noise" effect (mono, size 0.5,
