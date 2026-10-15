@@ -18,7 +18,7 @@ module.exports = {
       fontFamily: {
         sans: ["Rubik", "ui-sans-serif", "system-ui", "sans-serif"],
         script: ['"Great Vibes"', "cursive"],
-        display: ['"Pinyon Script"', "cursive"],
+        display: ['"Quase Display"', '"Quase"', "sans-serif"],
         outfit: ["Outfit", "ui-sans-serif", "system-ui", "sans-serif"]
       },
       letterSpacing: { eyebrow: "0.35em" },
