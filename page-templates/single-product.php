@@ -46,13 +46,14 @@ while (have_posts()) :
     $ideal_for   = $rows('awards_products_ideal_for_list', 'awards_products_ideal_for_item');
     $has_content = trim(get_the_content()) !== '';
 
-    // Gallery (ACF image arrays); falls back to the featured image.
+    // Gallery (ACF image arrays), with the featured image always first.
     $images = array_values(array_filter(array_map(
         fn($img) => is_array($img) ? (int) ($img['ID'] ?? $img['id'] ?? 0) : (int) $img,
         (array) $field('awards_products_image_gallery', false, [])
     )));
-    if (!$images && has_post_thumbnail()) {
-        $images = [get_post_thumbnail_id()];
+    if (has_post_thumbnail()) {
+        $featured_image_id = (int) get_post_thumbnail_id();
+        $images = array_values(array_unique(array_merge([$featured_image_id], $images)));
     }
 
     // Related products (ACF post IDs) — published ones only, in the chosen order.
