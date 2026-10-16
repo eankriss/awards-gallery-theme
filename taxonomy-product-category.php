@@ -205,11 +205,8 @@ $next_url = get_next_posts_page_link();
                         while (have_posts()) :
                             the_post();
 
-                            // Card image: the product's first gallery image, else its featured image.
-                            $gallery  = (array) $field('awards_products_image_gallery', get_the_ID(), []);
-                            $first    = $gallery[0] ?? null;
-                            $image_id = is_array($first) ? (int) ($first['ID'] ?? $first['id'] ?? 0) : (int) $first;
-                            $image_id = $image_id ?: (int) get_post_thumbnail_id();
+                            // Card image: always use the product's featured image.
+                            $image_id = (int) get_post_thumbnail_id();
                             $kicker   = $field('awards_product_subcategory', get_the_ID());
                             ?>
                             <a href="<?php the_permalink(); ?>" class="reveal group flex min-w-0 flex-col border border-gold/60 bg-ink-900 transition-colors duration-300 hover:border-gold hover:text-cream" data-product-index="<?php echo esc_attr($i); ?>" style="--d:<?php echo esc_attr(($i % 6) * 70); ?>ms">
