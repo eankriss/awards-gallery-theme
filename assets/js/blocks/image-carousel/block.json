@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "awards-gallery/image-carousel",
+  "title": "Awards Gallery Image Carousel",
+  "category": "media",
+  "icon": "images-alt2",
+  "description": "A seamless, continuously scrolling image carousel.",
+  "editorScript": "file:./build/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php",
+  "supports": { "html": false },
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "Featured" },
+    "title": { "type": "string", "default": "Words From" },
+    "titleAccent": { "type": "string", "default": "Our Gallery" },
+    "subheading": { "type": "string", "default": "A look at the people and occasions behind every award." },
+    "note": { "type": "string", "default": "" },
+    "widthMode": { "type": "string", "default": "max" },
+    "autoplay": { "type": "boolean", "default": true },
+    "items": {
+      "type": "array",
+      "default": []
+    },
+    "speed": { "type": "number", "default": 32 },
+    "direction": { "type": "string", "default": "left" },
+    "pauseOnHover": { "type": "boolean", "default": true },
+    "cardWidth": { "type": "number", "default": 180 },
+    "cardHeight": { "type": "number", "default": 250 },
+    "gap": { "type": "number", "default": 18 }
+  }
+}
