@@ -1,0 +1,21 @@
+.awards-image-carousel { overflow: hidden; background: #0b0b0b; color: #f7f2e9; padding: 4rem 0; }
+.awards-image-carousel__inner { width: min(100% - 2.5rem, 80rem); margin: 0 auto; }
+.awards-image-carousel--full .awards-image-carousel__inner { width: 100%; }
+.awards-image-carousel__intro { margin: 0 auto 2.5rem; max-width: 52rem; text-align: center; }
+.awards-image-carousel__intro h2 { margin: 2rem 0 0; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 400; line-height: 1.15; }
+.awards-image-carousel__subheading { margin-top: 1.25rem; color: rgba(247,242,233,.72); }
+.awards-image-carousel__viewport { overflow: hidden; width: 100%; }
+.awards-image-carousel__track { display: flex; width: max-content; gap: 0; animation: awards-carousel-scroll var(--carousel-speed) linear infinite; animation-direction: var(--carousel-direction); }
+.awards-image-carousel__group { display: flex; flex: none; gap: var(--carousel-gap); }
+.awards-image-carousel__card { width: var(--carousel-width); height: var(--carousel-height); flex: none; overflow: hidden; border-radius: .55rem; background: #242424; }
+.awards-image-carousel__card { position: relative; }
+.awards-image-carousel__card::after { position: absolute; inset: 0; content: ''; background: linear-gradient(135deg, rgba(198,161,91,.28), transparent 55%); opacity: 0; transition: opacity .45s ease; pointer-events: none; }
+.awards-image-carousel__card img { display: block; width: 100%; height: 100%; object-fit: cover; filter: brightness(.82); transition: transform .65s cubic-bezier(.2,.7,.2,1), filter .65s ease; }
+.awards-image-carousel__card:hover img { transform: scale(1.08); filter: brightness(1.08); }
+.awards-image-carousel__card:hover::after { opacity: 1; }
+.awards-image-carousel__viewport.is-pausable:hover .awards-image-carousel__track { animation-play-state: paused; }
+.awards-image-carousel--static .awards-image-carousel__track { animation: none; }
+.awards-image-carousel--static .awards-image-carousel__group[aria-hidden="true"] { display: none; }
+.awards-image-carousel__note { margin: 2.25rem auto 0; max-width: 62rem; color: rgba(247,242,233,.65); font-size: .875rem; line-height: 1.6; text-align: center; }
+@keyframes awards-carousel-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (max-width: 640px) { .awards-image-carousel { padding: 3rem 0; } .awards-image-carousel__inner { width: min(100% - 2rem, 80rem); } .awards-image-carousel__card { width: min(var(--carousel-width), 42vw); height: min(var(--carousel-height), 58vw); } }
