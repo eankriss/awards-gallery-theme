@@ -355,9 +355,14 @@
 			return;
 		}
 
-		var setPressed = function ( on ) {
+		var setPressed = function ( on, userInitiated ) {
 			btn.setAttribute( 'aria-pressed', String( on ) );
 			btn.setAttribute( 'aria-label', btn.getAttribute( on ? 'data-label-on' : 'data-label-off' ) );
+			if ( userInitiated ) {
+				document.dispatchEvent( new CustomEvent( 'awards-gallery-section-sound', {
+					detail: { section: section, active: on }
+				} ) );
+			}
 		};
 
 		// MP4 set to "try sound": it starts unmuted when the browser allows it,
@@ -398,7 +403,7 @@
 				} );
 			}
 
-			setPressed( on );
+			setPressed( on, true );
 		} );
 	} );
 
