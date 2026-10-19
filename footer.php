@@ -78,6 +78,122 @@ $socials      = awards_gallery_social_links();
     </div>
 </footer>
 
+<?php $global_music_url = awards_gallery_global_background_music_url(); ?>
+<?php if ($global_music_url) : ?>
+    <style>
+        @keyframes ag-global-music-pulse {
+            0%, 100% { border-color: rgba(218,147,40,.35); box-shadow: 0 8px 24px rgba(0,0,0,.3), 0 0 0 0 rgba(218,147,40,0); }
+            50% { border-color: rgba(218,147,40,.95); box-shadow: 0 8px 24px rgba(0,0,0,.3), 0 0 0 7px rgba(218,147,40,.16); }
+        }
+    </style>
+    <audio id="ag-global-background-music" src="<?php echo esc_url($global_music_url); ?>" autoplay loop preload="auto"></audio>
+    <button type="button" id="ag-global-background-music-toggle" aria-label="Turn background music on" aria-pressed="false" title="Play music" style="position:fixed;top:50%;right:1.25rem;z-index:60;display:flex;height:3.25rem;width:3.25rem;transform:translateY(-50%);align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(32,32,32,.88);color:#f5f0e8;box-shadow:0 8px 24px rgba(0,0,0,.3);font:inherit;cursor:pointer;transition:background-color .2s,transform .2s,box-shadow .2s;" onmouseover="this.style.backgroundColor='rgba(65,65,65,.95)';this.style.boxShadow='0 10px 28px rgba(0,0,0,.45)'" onmouseout="this.style.backgroundColor='rgba(32,32,32,.88)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.3)'">
+        <span aria-hidden="true" data-global-music-icon style="display:inline-flex;align-items:center;color:rgba(245,240,232,.55);transition:color .2s,text-shadow .2s;">
+            <svg data-global-music-off width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M11 21V10l9-2v10" stroke-width="2.2"/><circle cx="8.5" cy="21" r="2.1" fill="currentColor" stroke="none"/><circle cx="17.5" cy="18.8" r="2.1" fill="currentColor" stroke="none"/>
+                <path d="m21.5 20.5 5 3-5 3z" fill="currentColor" stroke="none"/>
+            </svg>
+            <svg data-global-music-on width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                <path d="M11 21V10l9-2v10" stroke-width="2.2"/><circle cx="8.5" cy="21" r="2.1" fill="currentColor" stroke="none"/><circle cx="17.5" cy="18.8" r="2.1" fill="currentColor" stroke="none"/>
+                <path d="M22 21.5v5M25 21.5v5" stroke-width="1.8"/>
+            </svg>
+        </span>
+        <span class="screen-reader-text" data-global-music-label>Play music</span>
+    </button>
+    <script>
+        (function () {
+            var audio = document.getElementById('ag-global-background-music');
+            var toggle = document.getElementById('ag-global-background-music-toggle');
+            if (!audio || !toggle) return;
+
+            var activeSections = new Set();
+            var resumeAfterSection = false;
+
+            document.addEventListener('awards-gallery-section-sound', function (event) {
+                var detail = event.detail || {};
+                if (!detail.section) return;
+
+                if (detail.active) {
+                    activeSections.add(detail.section);
+                    setState(false);
+                    if (!audio.paused) {
+                        resumeAfterSection = true;
+                        audio.pause();
+                    }
+                } else {
+                    activeSections.delete(detail.section);
+                    if (!activeSections.size && resumeAfterSection) {
+                        resumeAfterSection = false;
+                        audio.muted = false;
+                        audio.play().then(function () {
+                            setState(true);
+                        }).catch(function () {
+                            audio.muted = true;
+                            audio.play().catch(function () {});
+                            setState(false);
+                        });
+                    }
+                }
+            });
+
+            var label = toggle.querySelector('span:last-child');
+            var icon = toggle.querySelector('[data-global-music-icon]');
+            var iconOff = icon.querySelector('[data-global-music-off]');
+            var iconOn = icon.querySelector('[data-global-music-on]');
+            var setState = function (on) {
+                toggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+                toggle.setAttribute('aria-label', on ? 'Turn background music off' : 'Turn background music on');
+                toggle.setAttribute('title', on ? 'Pause music' : 'Play music');
+                iconOff.style.display = on ? 'none' : 'block';
+                iconOn.style.display = on ? 'block' : 'none';
+                icon.style.color = on ? '#f5f0e8' : 'rgba(245,240,232,.55)';
+                icon.style.textShadow = on ? '0 0 10px rgba(218,147,40,.8)' : 'none';
+                toggle.style.animation = on ? 'none' : 'ag-global-music-pulse 2s ease-in-out 3';
+                label.textContent = on ? 'Pause music' : 'Play music';
+            };
+
+            toggle.addEventListener('click', function () {
+                if (audio.paused || audio.muted) {
+                    audio.muted = false;
+                    audio.play().then(function () { setState(true); }).catch(function () { setState(false); });
+                } else {
+                    audio.pause();
+                    setState(false);
+                }
+            });
+
+            var startGlobalMusic = function () {
+                if (activeSections.size || !audio.paused) return;
+                audio.muted = false;
+                audio.play().then(function () {
+                    setState(true);
+                }).catch(function () {
+                    // A browser may require a gesture before audible playback.
+                    // Keep the track running muted, then unmute on the first
+                    // gesture so the global player does not remain stopped.
+                    audio.muted = true;
+                    audio.play().then(function () {
+                        setState(true);
+                    }).catch(function () {});
+                });
+            };
+
+            ['pointerdown', 'keydown', 'touchstart'].forEach(function (eventName) {
+                document.addEventListener(eventName, function () {
+                    if (audio.muted && !activeSections.size) {
+                        audio.muted = false;
+                    }
+                    startGlobalMusic();
+                }, { once: true, passive: true });
+            });
+
+            // Try audible autoplay first. Browsers may reject this until the
+            // visitor interacts, so fall back to muted playback in that case.
+            startGlobalMusic();
+        }());
+    </script>
+<?php endif; ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>

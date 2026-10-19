@@ -26,6 +26,37 @@ add_filter('acf/settings/dir', function ($dir) {
     return get_stylesheet_directory_uri() . '/acf/';
 });
 
+// Allow the audio formats supported by the global background music field.
+// ACF uses WordPress' upload MIME whitelist, so adding the field alone is not
+// enough when a format is not enabled by the current site configuration.
+add_filter('upload_mimes', function ($mimes) {
+    $mimes['mp3']  = 'audio/mpeg';
+    $mimes['m4a']  = 'audio/mp4';
+    $mimes['ogg']  = 'audio/ogg';
+    $mimes['oga']  = 'audio/ogg';
+    $mimes['wav']  = 'audio/wav';
+    $mimes['webm'] = 'audio/webm';
+
+    return $mimes;
+});
+
+function awards_gallery_global_background_music_url()
+{
+    if (!function_exists('get_field') || !get_field('awards_enable_global_bg_music', 'option')) {
+        return '';
+    }
+
+    $music = get_field('awards_dynamic_background_music', 'option');
+
+    if (is_array($music)) {
+        $music = $music['url'] ?? '';
+    } elseif (is_numeric($music)) {
+        $music = wp_get_attachment_url((int) $music);
+    }
+
+    return is_string($music) ? esc_url_raw($music) : '';
+}
+
 // Blog posts: the hero banner's focal point — the spot of the featured image kept in view
 // when it crops. Set with the "Hero Banner" panel in the editor (assets/js/editor/post-hero-focal.js).
 add_action('init', function () {
