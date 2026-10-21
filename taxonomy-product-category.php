@@ -208,6 +208,11 @@ $next_url = get_next_posts_page_link();
                             // Card image: always use the product's featured image.
                             $image_id = (int) get_post_thumbnail_id();
                             $kicker   = $field('awards_product_subcategory', get_the_ID());
+                            $sku      = trim((string) $field('awards_products_sku', get_the_ID()));
+                            if ($sku === '') {
+                                $title_parts = preg_split('/\s+/', trim(get_the_title()));
+                                $sku = strtoupper((string) end($title_parts));
+                            }
                             ?>
                             <a href="<?php the_permalink(); ?>" class="reveal group flex min-w-0 flex-col border border-gold/60 bg-ink-900 transition-colors duration-300 hover:border-gold hover:text-cream" data-product-index="<?php echo esc_attr($i); ?>" style="--d:<?php echo esc_attr(($i % 6) * 70); ?>ms">
                                 <div class="relative overflow-hidden bg-black">
@@ -227,7 +232,7 @@ $next_url = get_next_posts_page_link();
                                     <?php if ($kicker) : ?>
                                         <p class="text-[9px] uppercase leading-tight tracking-[0.18em] text-gold sm:text-[10px]"><?php echo esc_html($kicker); ?></p>
                                     <?php endif; ?>
-                                    <h3 class="<?php echo $kicker ? 'mt-1.5' : ''; ?> break-words text-[11px] font-normal leading-snug text-cream sm:text-xs"><?php the_title(); ?></h3>
+                                    <h3 class="<?php echo $kicker ? 'mt-1.5' : ''; ?> break-words text-[11px] font-normal leading-snug text-cream sm:text-xs"><?php echo esc_html($sku); ?></h3>
                                     <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-[9px] uppercase tracking-[0.18em] text-gold sm:text-[10px] sm:tracking-[0.2em]">
                                         <?php esc_html_e('View Details', 'awards-gallery-theme'); ?>
                                         <span class="inline-block transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>

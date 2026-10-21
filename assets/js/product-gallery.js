@@ -2,7 +2,7 @@
  * Single Product template: clicking a thumbnail shows that image in the main frame.
  * The thumbnails sit in a horizontal slider (three visible); the arrow buttons
  * page through it and hide at either end. Swipe / trackpad scrolling also works.
- * Loaded only on pages using page-templates/single-product.php.
+ * Loaded only on single product CPT pages.
  */
 ( function () {
 	document.querySelectorAll( '[data-product-gallery]' ).forEach( function ( gallery ) {

@@ -37,7 +37,10 @@ while (have_posts()) :
     the_post();
 
     $post_id     = get_the_ID();
-    $theme       = $field('awards_product_subcategory');
+    $sku         = $field('awards_products_sku');
+    $subcategory = $field('awards_product_subcategory');
+    $title_parts = preg_split('/\s+/', trim(get_the_title()));
+    $breadcrumb_product_label = $sku ?: strtoupper((string) end($title_parts));
     $short_desc  = $field('awards_products_short_description');
     $features    = $rows('awards_products_key_features_list', 'awards_products_key_features_item');
     $ideal_for   = $rows('awards_products_ideal_for_list', 'awards_products_ideal_for_item');
@@ -122,7 +125,7 @@ while (have_posts()) :
             [__('Products', 'awards-gallery-theme'), $all_url],
         ],
         $term_crumbs,
-        [[get_the_title(), get_permalink()]]
+        [[$breadcrumb_product_label, get_permalink()]]
     );
     ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -131,7 +134,7 @@ while (have_posts()) :
         // Hero: pads its own top to clear the fixed header,
         // then a 293px banner (Figma) with the image at 80% opacity on black.
         ?>
-        <header class="bg-black">
+        <header class="bg-black pt-20 lg:pt-[81px]">
             <div class="relative isolate overflow-hidden">
                 <img src="<?php echo esc_url(get_theme_file_uri('/assets/img/award template banner.webp')); ?>" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover opacity-80" fetchpriority="high">
 
@@ -151,10 +154,13 @@ while (have_posts()) :
                         </ol>
                     </nav>
 
-                    <?php if ($theme) : ?>
-                        <p class="animate-rise mt-10 text-xs uppercase leading-6 tracking-[0.4em] text-gold sm:text-base lg:mt-[49px]" style="animation-delay:.1s"><?php echo esc_html($theme); ?></p>
+                    <?php if ($subcategory) : ?>
+                        <p class="animate-rise mt-10 text-xs uppercase leading-6 tracking-[0.4em] text-gold sm:text-base lg:mt-[49px]" style="animation-delay:.1s"><?php echo esc_html($subcategory); ?></p>
                     <?php endif; ?>
-                    <h1 class="animate-rise <?php echo $theme ? 'mt-2' : 'mt-10 lg:mt-[49px]'; ?> text-4xl font-normal uppercase leading-none text-cream sm:text-5xl lg:text-[60px] lg:tracking-[-1.5px]" style="animation-delay:.2s"><?php the_title(); ?></h1>
+                    <h1 class="animate-rise <?php echo $subcategory ? 'mt-2' : 'mt-10 lg:mt-[49px]'; ?> text-4xl font-normal uppercase leading-none text-cream sm:text-5xl lg:text-[60px] lg:tracking-[-1.5px]" style="animation-delay:.2s"><?php the_title(); ?></h1>
+                    <?php if ($sku) : ?>
+                        <p class="animate-rise mt-4 text-xs uppercase tracking-[0.28em] text-cream/65 sm:text-sm" style="animation-delay:.3s"><?php esc_html_e('SKU:', 'awards-gallery-theme'); ?> <?php echo esc_html($sku); ?></p>
+                    <?php endif; ?>
                 </div>
             </div>
         </header>

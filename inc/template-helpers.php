@@ -160,8 +160,8 @@ function awards_gallery_starts_with_hero()
     if (!is_singular()) {
         return false;
     }
-    // Blog posts (single-post.php) and Single Product pages always open with their own hero.
-    if (is_singular('post') || is_page_template('page-templates/single-product.php')) {
+    // Blog posts (single-post.php) and CPT Single Product pages always open with their own hero.
+    if (is_singular('post') || is_singular('product-page')) {
         return true;
     }
 
