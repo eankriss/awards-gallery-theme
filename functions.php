@@ -360,3 +360,12 @@ add_filter('acf/fields/relationship/query/name=awards_related_products', functio
 
     return $args;
 }, 10, 3);
+
+// Keep the Relationship field explicitly tied to the product CPT so ACF can
+// resolve saved selections when the editor is reopened.
+add_filter('acf/load_field/name=awards_related_products', function ($field) {
+    $field['post_type']   = ['product-page'];
+    $field['post_status'] = ['publish', 'draft', 'pending', 'private'];
+
+    return $field;
+});
